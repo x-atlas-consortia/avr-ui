@@ -17,6 +17,9 @@ You will need APP_CLIENT_ID, and a APP_CLIENT_SECRET to authenticate (get a bear
     )
 ```
 
+### Environment
+Use example.env to create a .env with corresponding db, user and consortium values
+
 ### Servers
 
 You will need to change the '*_ENDPOINT' and '*_API_BASE' urls as needed.
