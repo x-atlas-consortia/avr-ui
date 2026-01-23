@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-329LZM826B"></script>
+    <script>
+        let track_host = 'avr.hubmapconsortium.org';
+        if (window.location.hostname == track_host) {
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-329LZM826B', {
+                'cookie_domain': track_host,
+                'cookie_flags': 'max-age=7200;secure;samesite=none'
+            });
+            console.log("Google Analytics ON");
+        } else {
+            console.log("Google Analytics OFF");
+        }
+    </script>
+    <title>HuBMAP AVR Upload (v2)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <link rel="icon" href="/static/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+  </head>
+
+  <body>
+    <script>
+      var token={{ token | tojson }};
+      var data_provider_groups={{ data_provider_groups | tojson }};
+    </script>
+    <section class="text-gray-600 body-font relative" id="form-block">
+      <div class="px-5 topmenu" style="background-color:#444A65; color:white; height:50px; display:flex; flex-direction:row; align-items:center">
+        <a href="https://portal.hubmapconsortium.org/">
+          <svg align-items="center" height="40px" width="86px" viewBox="0 0 800 162" fill="#fff" aria-label="HubMAP Logo">
+            <path d="M99.9.47v161.37H56.26V94.06H43.2v67.78H-.44V.47H43.2v57.71h13.06V.47H99.9zm112.16 29.1v132.26h-42.6l.73-10.99c-2.9 4.46-6.48 7.8-10.73 10.04-4.25 2.23-9.14 3.34-14.67 3.34-6.29 0-11.51-1.06-15.65-3.19-4.15-2.13-7.2-4.95-9.17-8.47-1.97-3.52-3.2-7.19-3.68-11.01-.48-3.82-.73-11.41-.73-22.77V29.57h41.88v90c0 10.3.33 16.41.98 18.34.66 1.93 2.44 2.89 5.34 2.89 3.11 0 4.96-1 5.55-2.99.59-1.99.88-8.41.88-19.24v-89h41.87zM228.33.47h43.54c13.75 0 24.17 1.03 31.25 3.09 7.08 2.06 12.8 6.23 17.15 12.5 4.35 6.28 6.53 16.38 6.53 30.33 0 9.43-1.54 16-4.61 19.72-3.08 3.72-9.14 6.57-18.19 8.57 10.09 2.19 16.93 5.83 20.53 10.92 3.59 5.09 5.39 12.88 5.39 23.39v14.96c0 10.91-1.3 18.98-3.89 24.23s-6.72 8.84-12.39 10.77c-5.67 1.93-17.28 2.89-34.83 2.89h-50.48V.47zm43.64 27.61v35.88c1.87-.07 3.32-.1 4.35-.1 4.28 0 7.01-1.01 8.19-3.04 1.17-2.03 1.76-7.82 1.76-17.39 0-5.05-.48-8.59-1.45-10.61-.97-2.03-2.23-3.3-3.78-3.84-1.56-.54-4.58-.83-9.07-.9zm0 61v45.15c6.15-.2 10.07-1.13 11.77-2.79 1.69-1.66 2.54-5.75 2.54-12.26v-15.05c0-6.91-.76-11.1-2.28-12.56-1.53-1.46-5.54-2.29-12.03-2.49zM480.22.47v161.37h-38.15l-.05-108.94-15.19 108.94h-27.06L383.76 55.39l-.05 106.45h-38.15V.47h56.47c1.68 9.7 3.4 21.14 5.18 34.31l6.2 41.05L423.44.48h56.78zm92.95 0l24.96 161.37h-44.6l-2.34-29h-15.61l-2.62 29h-45.12L510.1.47h63.07zm-23.13 103.76c-2.21-18.28-4.42-40.87-6.65-67.78-4.45 30.9-7.24 53.49-8.38 67.78h15.03zM605.54.47h43.95c11.88 0 21.03.9 27.42 2.69 6.39 1.79 11.19 4.39 14.41 7.77s5.39 7.49 6.53 12.31c1.14 4.82 1.71 12.28 1.71 22.38v14.05c0 10.3-1.11 17.81-3.32 22.53-2.21 4.72-6.27 8.34-12.18 10.86-5.91 2.53-13.63 3.79-23.17 3.79h-11.71v64.99h-43.64V.47zm43.64 27.61v41.06c1.24.07 2.31.1 3.21.1 4.01 0 6.79-.95 8.34-2.84 1.55-1.89 2.33-5.83 2.33-11.81V41.34c0-5.52-.9-9.1-2.7-10.76-1.78-1.67-5.52-2.5-11.18-2.5z"></path>
+          </svg>
+        </a>
+        <h1 class="toptitle" style="justify-content: center; display: flex; align-items: center; width: 100%">Antibody Validation Report Upload</h1>
+      </div>
+
+      <div class="container px-5 py-10 mx-auto">
+
+        <div class="uploadWrap">
+
+          <div class="uploadCol uploadColClr">
+            <h3>Antibody Validation Report</h3>
+              <p class="leading-relaxed text-base">
+                  The HuBMAP Antibody Validation Report Upload allows new reports to be uploaded to the HuBMAP AVR tracking system.
+              </p>
+              <p class="leading-relaxed text-base">
+                  To upload a report, follow the steps outlined in the
+                  <a href="https://docs.hubmapconsortium.org/avr/avr-upload-v2.html" target="_blank">Uploading new reports</a>
+                  documentation.
+                  You will need to create a .tsv file according to the
+                  <a href="https://docs.hubmapconsortium.org/avr/tsv-format-v2.html" target="_blank">TSV Structure</a>
+                  documentation.
+                  We have also provided a
+                  <a href="https://docs.hubmapconsortium.org/avr/avr-template-v2.tsv" target="_blank">template tsv file</a>
+                  to get you started.
+              </p>
+          </div>
+
+          <div class="uploadCol">
+            <form onsubmit="AJAXSubmit(this); return false;" enctype="multipart/form-data" action="/antibodies/import" method="post" id="antibody-form">
+
+              <div class="uploadInnerWrap">
+                <label for="name" class="text-base leading-7 text-blueGray-500 mb-5">Antibody Files</label>
+                  <p>
+                      Upload a single tsv file describing the AVRs being uploaded (see
+                      <a href="https://docs.hubmapconsortium.org/avr/avr-upload-v2.html" target="_blank">Uploading new reports</a>
+                      and
+                      <a href="https://docs.hubmapconsortium.org/avr/tsv-format-v2.html" target="_blank">TSV Structure</a>
+                      ).
+                  </p>
+                  <input accept=".tsv" name="file" multiple="multiple" type="file" id="fileInput" class="" required="" />
+              </div>
+      
+              <div class="uploadInnerWrap">
+                <label for="name" class="text-base leading-7 text-blueGray-500 mb-5">Antibody PDFs</label>
+                  <p>
+                      Upload the PDF files associated with the tsv by clicking Browse.
+                      To easily upload place all files in a single directory and use the ctrl (or command on Mac)
+                      key to select them all in the file dialog.
+                  </p>
+                  <input accept=".pdf" name="pdf" multiple="multiple" type="file" id="fileInput">
+              </div>
+              
+              <div class="UploadInnerWrapFull">
+              {% if data_provider_groups %}
+                  <div>
+                  Data Provider Group:
+                  <select name="group_id">
+                      {% for g in data_provider_groups %}
+                      <option value="{{g[0]}}">{{ g[1] }}</option>
+                      {% endfor %}
+                  </select>
+                  </div>
+                  {% endif %}
+                  <div class="w-full submitBut">
+                  <button type="submit" class="mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
+                  </div>
+              </div>
+              
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+  </section>
+
+  <section class="text-gray-600 body-font relative hidden" id="loading-screen">
+    <div class="flex flex-col text-center w-full mb-12">
+      <div class="px-5 topmenu" style="background-color:#444A65; color:white; height:60px; display:flex; flex-direction:row; align-items:center">
+        <a href="https://portal.hubmapconsortium.org/">
+          <svg align-items="center" height="30px" width="86px" viewBox="0 0 900 162" fill="#fff" aria-label="HubMAP Logo">
+            <path d="M99.9.47v161.37H56.26V94.06H43.2v67.78H-.44V.47H43.2v57.71h13.06V.47H99.9zm112.16 29.1v132.26h-42.6l.73-10.99c-2.9 4.46-6.48 7.8-10.73 10.04-4.25 2.23-9.14 3.34-14.67 3.34-6.29 0-11.51-1.06-15.65-3.19-4.15-2.13-7.2-4.95-9.17-8.47-1.97-3.52-3.2-7.19-3.68-11.01-.48-3.82-.73-11.41-.73-22.77V29.57h41.88v90c0 10.3.33 16.41.98 18.34.66 1.93 2.44 2.89 5.34 2.89 3.11 0 4.96-1 5.55-2.99.59-1.99.88-8.41.88-19.24v-89h41.87zM228.33.47h43.54c13.75 0 24.17 1.03 31.25 3.09 7.08 2.06 12.8 6.23 17.15 12.5 4.35 6.28 6.53 16.38 6.53 30.33 0 9.43-1.54 16-4.61 19.72-3.08 3.72-9.14 6.57-18.19 8.57 10.09 2.19 16.93 5.83 20.53 10.92 3.59 5.09 5.39 12.88 5.39 23.39v14.96c0 10.91-1.3 18.98-3.89 24.23s-6.72 8.84-12.39 10.77c-5.67 1.93-17.28 2.89-34.83 2.89h-50.48V.47zm43.64 27.61v35.88c1.87-.07 3.32-.1 4.35-.1 4.28 0 7.01-1.01 8.19-3.04 1.17-2.03 1.76-7.82 1.76-17.39 0-5.05-.48-8.59-1.45-10.61-.97-2.03-2.23-3.3-3.78-3.84-1.56-.54-4.58-.83-9.07-.9zm0 61v45.15c6.15-.2 10.07-1.13 11.77-2.79 1.69-1.66 2.54-5.75 2.54-12.26v-15.05c0-6.91-.76-11.1-2.28-12.56-1.53-1.46-5.54-2.29-12.03-2.49zM480.22.47v161.37h-38.15l-.05-108.94-15.19 108.94h-27.06L383.76 55.39l-.05 106.45h-38.15V.47h56.47c1.68 9.7 3.4 21.14 5.18 34.31l6.2 41.05L423.44.48h56.78zm92.95 0l24.96 161.37h-44.6l-2.34-29h-15.61l-2.62 29h-45.12L510.1.47h63.07zm-23.13 103.76c-2.21-18.28-4.42-40.87-6.65-67.78-4.45 30.9-7.24 53.49-8.38 67.78h15.03zM605.54.47h43.95c11.88 0 21.03.9 27.42 2.69 6.39 1.79 11.19 4.39 14.41 7.77s5.39 7.49 6.53 12.31c1.14 4.82 1.71 12.28 1.71 22.38v14.05c0 10.3-1.11 17.81-3.32 22.53-2.21 4.72-6.27 8.34-12.18 10.86-5.91 2.53-13.63 3.79-23.17 3.79h-11.71v64.99h-43.64V.47zm43.64 27.61v41.06c1.24.07 2.31.1 3.21.1 4.01 0 6.79-.95 8.34-2.84 1.55-1.89 2.33-5.83 2.33-11.81V41.34c0-5.52-.9-9.1-2.7-10.76-1.78-1.67-5.52-2.5-11.18-2.5z"></path>
+          </svg>
+        </a>
+        <h1 class="toptitle"  style="justify-content: center; display: flex; align-items: center; width: 100%">Antibody Validation Report Upload</h1>
+      </div>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Uploading now...</p>
+        <p class="lg:w-2/3 mx-auto leading-relaxed text-base">This may take a few seconds per line in the .tsv file.</p>
+    </div>
+  </section>
+
+  <section class="text-gray-600 body-font relative hidden" id="upload-results-block">
+    <div class="flex flex-col text-center w-full mb-12">
+      <div class="px-5 topmenu" style="background-color:#444A65; color:white; height:60px; display:flex; flex-direction:row; align-items:center">
+        <a href="https://portal.hubmapconsortium.org/">
+          <svg align-items="center" height="30px" width="86px" viewBox="0 0 900 162" fill="#fff" aria-label="HubMAP Logo">
+            <path d="M99.9.47v161.37H56.26V94.06H43.2v67.78H-.44V.47H43.2v57.71h13.06V.47H99.9zm112.16 29.1v132.26h-42.6l.73-10.99c-2.9 4.46-6.48 7.8-10.73 10.04-4.25 2.23-9.14 3.34-14.67 3.34-6.29 0-11.51-1.06-15.65-3.19-4.15-2.13-7.2-4.95-9.17-8.47-1.97-3.52-3.2-7.19-3.68-11.01-.48-3.82-.73-11.41-.73-22.77V29.57h41.88v90c0 10.3.33 16.41.98 18.34.66 1.93 2.44 2.89 5.34 2.89 3.11 0 4.96-1 5.55-2.99.59-1.99.88-8.41.88-19.24v-89h41.87zM228.33.47h43.54c13.75 0 24.17 1.03 31.25 3.09 7.08 2.06 12.8 6.23 17.15 12.5 4.35 6.28 6.53 16.38 6.53 30.33 0 9.43-1.54 16-4.61 19.72-3.08 3.72-9.14 6.57-18.19 8.57 10.09 2.19 16.93 5.83 20.53 10.92 3.59 5.09 5.39 12.88 5.39 23.39v14.96c0 10.91-1.3 18.98-3.89 24.23s-6.72 8.84-12.39 10.77c-5.67 1.93-17.28 2.89-34.83 2.89h-50.48V.47zm43.64 27.61v35.88c1.87-.07 3.32-.1 4.35-.1 4.28 0 7.01-1.01 8.19-3.04 1.17-2.03 1.76-7.82 1.76-17.39 0-5.05-.48-8.59-1.45-10.61-.97-2.03-2.23-3.3-3.78-3.84-1.56-.54-4.58-.83-9.07-.9zm0 61v45.15c6.15-.2 10.07-1.13 11.77-2.79 1.69-1.66 2.54-5.75 2.54-12.26v-15.05c0-6.91-.76-11.1-2.28-12.56-1.53-1.46-5.54-2.29-12.03-2.49zM480.22.47v161.37h-38.15l-.05-108.94-15.19 108.94h-27.06L383.76 55.39l-.05 106.45h-38.15V.47h56.47c1.68 9.7 3.4 21.14 5.18 34.31l6.2 41.05L423.44.48h56.78zm92.95 0l24.96 161.37h-44.6l-2.34-29h-15.61l-2.62 29h-45.12L510.1.47h63.07zm-23.13 103.76c-2.21-18.28-4.42-40.87-6.65-67.78-4.45 30.9-7.24 53.49-8.38 67.78h15.03zM605.54.47h43.95c11.88 0 21.03.9 27.42 2.69 6.39 1.79 11.19 4.39 14.41 7.77s5.39 7.49 6.53 12.31c1.14 4.82 1.71 12.28 1.71 22.38v14.05c0 10.3-1.11 17.81-3.32 22.53-2.21 4.72-6.27 8.34-12.18 10.86-5.91 2.53-13.63 3.79-23.17 3.79h-11.71v64.99h-43.64V.47zm43.64 27.61v41.06c1.24.07 2.31.1 3.21.1 4.01 0 6.79-.95 8.34-2.84 1.55-1.89 2.33-5.83 2.33-11.81V41.34c0-5.52-.9-9.1-2.7-10.76-1.78-1.67-5.52-2.5-11.18-2.5z"></path>
+          </svg>
+        </a>
+        <h1 class="toptitle"  style="justify-content: center; display: flex; align-items: center; width: 100%">Antibody Validation Report Upload</h1>
+      </div>
+    </div>
+    <div class="uploadWrap centerJustify" >
+      <p class="leading-relaxed text-base"><b>Upload Results</b></p>
+        <div class="" id="upload-results"></div>
+        <div class="">
+          <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick="returnHome();">Ok</button>
+        </div>
+    </div>
+  </section>
+
+  <script type="text/javascript">
+"use strict";
+
+var csv_content;
+
+function returnHome () {
+  window.location.href='/';
+}
+
+function downloadCsv () {
+  var hiddenElement = document.createElement('a');
+  hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv_content);
+  hiddenElement.target = '_blank';
+  hiddenElement.download = 'antibodies_created.csv';
+  hiddenElement.click();
+}
+
+function resetForm () {
+  jQuery('#form-block').removeClass('hidden');
+  jQuery('#upload-results-block').addClass('hidden');
+  jQuery('#upload-results').html('');
+  jQuery('#antibody-form').trigger('reset');
+}
+
+function AJAXSubmit (oFormElement) {
+  if (!oFormElement.action) { return; }
+  console.log('AJAXSubmit;token: ',token);
+  var accessToken = token["groups.api.globus.org"]["access_token"];
+  console.log('AJAXSubmit;groups.api.globus.org.access_token: ',accessToken);
+  var oReq = new XMLHttpRequest();
+  oReq.addEventListener("load", ajaxSuccess);
+  jQuery('#form-block').addClass('hidden');
+  jQuery('#loading-screen').removeClass('hidden');
+  if (oFormElement.method.toLowerCase() === "post") {
+    oReq.open("post", oFormElement.action, true);
+    oReq.setRequestHeader("Authorization", "Bearer " + accessToken);
+    oReq.send(new FormData(oFormElement));
+  } else {
+    var oField, sFieldType, nFile, sSearch = "";
+    for (var nItem = 0; nItem < oFormElement.elements.length; nItem++) {
+      oField = oFormElement.elements[nItem];
+      if (!oField.hasAttribute("name")) { continue; }
+      sFieldType = oField.nodeName.toUpperCase() === "INPUT" ? oField.getAttribute("type").toUpperCase() : "TEXT";
+      if (sFieldType === "FILE") {
+        for (nFile = 0; nFile < oField.files.length; sSearch += "&" + escape(oField.name) + "=" + escape(oField.files[nFile++].name));
+      } else if ((sFieldType !== "RADIO" && sFieldType !== "CHECKBOX") || oField.checked) {
+        sSearch += "&" + escape(oField.name) + "=" + escape(oField.value);
+      }
+    }
+    oReq.open("GET", oFormElement.action.replace(/(?:\?.*)?$/, sSearch.replace(/^&/, "?")), true);
+    oReq.send(null);
+  }
+}
+
+function ajaxSuccess (event) {
+  jQuery('#loading-screen').addClass('hidden');
+  jQuery('#upload-results-block').removeClass('hidden');
+  console.log('event.target: ',event.target)
+  const http_status = event.target.status;
+  var responsetable = '';
+  let jsonresponse = null;
+  try {
+      jsonresponse = JSON.parse(event.target.response);
+  } catch {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(event.target.response, 'text/html');
+    const errorTitle = doc.querySelector('h1')?.textContent || 'Error';
+    const errorMsg = doc.querySelector('p')?.textContent || 'An unexpected error occurred.';
+
+    responsetable += '<div>';
+    responsetable += `<p><b>${errorTitle}</b></p>`;
+    responsetable += `<p>${errorMsg}</p>`;
+    responsetable += '</div><br>';
+
+    jQuery('#upload-results').html(responsetable);
+    return;
+  }
+  if (http_status == 201) {
+      var csv_content = "antibody_name,antibody_hubmap_id\n";
+      responsetable += '<p>All entities in the Andibody Files have been successfully uploaded.</p>';
+      responsetable += '<br>';
+      responsetable += '<table><tr><th style="padding-right: 30px;">AVR Document</th><th>HuBMAP ID</th></tr>';
+      jQuery.each(jsonresponse.antibodies, function(name, value) {
+        responsetable += '<tr>';
+        responsetable += '<td style="padding-right: 30px;">' + value.antibody_name + '</td>';
+        responsetable += '<td>' + value.antibody_hubmap_id + '</td>';
+        responsetable += '</tr>';
+        csv_content += value.antibody_name + ',' + value.antibody_hubmap_id + '\n';
+      })
+      responsetable += '</table>';
+      if (jsonresponse.pdf_files_not_processed.length > 0) {
+        responsetable += '<br>';
+        responsetable += '<p>The following .pdf files that were uploaded were not found in the .tsv files, and so were not saved.</p>';
+        responsetable += '<br>';
+        responsetable += '<table><tr><th>File Name</th></tr>';
+        jQuery.each(jsonresponse.pdf_files_not_processed, function(index, value) {
+          responsetable += '<tr>';
+          responsetable += '<td>' + value + '</td>';
+          responsetable += '</tr>';
+        })
+        responsetable += '</table>';
+      }
+  } else if (http_status == 406) {
+      responsetable += '<div>';
+      responsetable += '<p><b>Error</b></p>';
+      responsetable += '<p>' + jsonresponse.message + '</p>';
+      responsetable += '</div>';
+      responsetable += '<br>';
+  } else {
+      responsetable += '<div>';
+      responsetable += '<p><b>Unexpected Error</b></p>';
+      responsetable += '<p>Received from the server: ' + jsonresponse.message + '; HTTP Status: ' + http_status + '</p>';
+      responsetable += '</div>';
+      responsetable += '<br>';
+  }
+  jQuery('#upload-results').html(responsetable);
+}
+</script>
+</body>
+</html>

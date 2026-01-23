@@ -1,0 +1,24 @@
+FROM python:3.12.2-alpine3.19
+
+RUN apk add --no-cache --update build-base libffi-dev postgresql-dev postgresql-libs
+
+RUN apk add --update nodejs yarn py3-pypdf2
+
+ENV VIRTUAL_ENV=/app
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+RUN python3 -m pip install --upgrade pip
+
+WORKDIR /app
+COPY requirements-dev.txt .
+RUN pip install -r requirements-dev.txt
+
+ARG DEVELOPMENT
+RUN if [ -z $DEVELOPMENT ] ; then apk --purge del build-base postgresql-dev ; fi
+
+WORKDIR /app/server
+COPY server/antibodyapi .
+COPY server/package.json .
+COPY server/yarn.lock .
+RUN yarn

@@ -1,0 +1,44 @@
+services:
+  db:
+    environment:
+      - POSTGRES_DB=antibodydb
+      - POSTGRES_PASSWORD=password
+    image: postgres:13.3
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./deploy/postgresql_init_scripts:/docker-entrypoint-initdb.d
+  elasticsearch:
+    environment:
+      - discovery.type=single-node
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    ports:
+      - '5601:5601'
+  mockserver:
+    image: mockserver/mockserver
+    networks:
+      default:
+        aliases:
+          - ingestmock
+          - uuidmock
+  web:
+    command: sh -c "yarn webpack --mode development --watch & flask run --host=0.0.0.0"
+    build:
+      args:
+        - DEVELOPMENT=1
+      context: .
+      dockerfile: DockerfileDev
+    depends_on:
+      - db
+      - elasticsearch
+      - mockserver
+    environment:
+        - FLASK_APP=antibodyapi
+        - FLASK_ENV=development
+    ports:
+      - '5000:5000'
