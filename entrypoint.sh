@@ -13,11 +13,11 @@ echo "Starting antibody-api container with the same host user UID: $HOST_UID and
 getent passwd $HOST_UID > /dev/null
 # $? is a special variable that captures the exit status of last task
 if [ $? -ne 0 ]; then
-    addgroup -g $HOST_GID -S hubmap
-    adduser -S -u $HOST_UID -g $HOST_GID hubmap
+    addgroup -g $HOST_GID -S $USER
+    adduser -S -u $HOST_UID -g $HOST_GID $USER
 fi
 
 # Lastly we use su-exec to execute our process "$@" as that user
 # Remember CMD from a Dockerfile of child image gets passed to the entrypoint.sh as command line arguments
 # "$@" is a shell variable that means "all the arguments"
-exec /sbin/su-exec hubmap "$@"
+exec /sbin/su-exec $USER "$@"
