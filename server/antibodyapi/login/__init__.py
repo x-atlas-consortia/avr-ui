@@ -52,11 +52,11 @@ def login():
         #logger.info(f"login(): my_groups: {my_groups}")
         my_group_ids = [g['id'] for g in my_groups]
         is_authorized = False
-        hubmap_avr_uploaders_group_id: str = current_app.config['HUBMAP_AVR_UPLOADERS_GROUP_ID']
-        if hubmap_avr_uploaders_group_id in my_group_ids:
+        avr_uploaders_group_id: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
+        if avr_uploaders_group_id in my_group_ids:
             is_authorized = True
         logger.info(f"login(): groups: {my_group_ids}; "
-                    f"uploader_group: {hubmap_avr_uploaders_group_id}; "
+                    f"uploader_group: {avr_uploaders_group_id}; "
                     f"is_authorized: {is_authorized}")
 
         session.update(
@@ -76,7 +76,7 @@ def login():
             logger.info("User is not authorized.")
             return render_template(
                 'unauthorized.html',
-                hubmap_avr_uploaders_group_id=hubmap_avr_uploaders_group_id
+                avr_uploaders_group_id=avr_uploaders_group_id
             )
 
         logger.info(f"url_for('hubmap.hubmap'): {url_for('hubmap.hubmap')}")

@@ -45,10 +45,10 @@ def import_antibodies(): # pylint: disable=too-many-branches
 
     if not session.get('is_authorized'):
         logger.info("User is not authorized.")
-        hubmap_avr_uploaders_group_id: str = current_app.config['HUBMAP_AVR_UPLOADERS_GROUP_ID']
+        avr_uploaders_group_id: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
         return render_template(
             'unauthorized.html',
-            hubmap_avr_uploaders_group_id=hubmap_avr_uploaders_group_id
+            avr_uploaders_group_id=avr_uploaders_group_id
         )
 
     if 'file' not in request.files:
