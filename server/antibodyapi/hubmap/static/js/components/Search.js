@@ -8,8 +8,6 @@ import AntibodyHitsTable from './AntibodyHitsTable';
 import { AdditionalColumns } from './AdditionalColumns';
 import DownloadFile from './DownloadFile';
 import AppNavBar from './AppNavBar';
-import Popup from 'reactjs-popup';
-import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useCookies } from 'react-cookie';
 import CookieConsent from 'react-cookie-consent';
@@ -188,6 +186,7 @@ function Search(props) {
 
       <LayoutResults>
 
+      <div className='sk-searchActions'>
         <ActionBar>
           <ActionBarRow>
           <HitsStats />
@@ -197,17 +196,18 @@ function Search(props) {
           </ActionBarRow>
         </ActionBar>
 
-        <span className='float-right'><Button variant="primary" onClick={() => setModalShow(true)}>
+        <div><Button variant="primary" onClick={() => setModalShow(true)}>
           Configure Columns
-        </Button></span>
+        </Button></div>
         <AdditionalColumns show={modalShow}
         onHide={() => setModalShow(false)}/>
+        </div>
+        <Hits
+          listComponent={AntibodyHitsTable}
+          hitsPerPage={20}
+          mod="sk-hits-list"
+        />
 
-          <Hits
-            listComponent={AntibodyHitsTable}
-            hitsPerPage={20}
-            mod="sk-hits-list"
-          />
         <InitialLoader />
         <NoHits />
 

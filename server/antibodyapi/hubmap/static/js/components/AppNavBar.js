@@ -11,7 +11,7 @@ const AppNavBar = () => {
 
   return (
     <Navbar expand="lg"  bg="secondary" data-bs-theme="dark">
-      <Container>
+      <Container className='avr-container'>
         <Navbar.Brand href="/">
           <img
               src="/static/atlas-logo.png"

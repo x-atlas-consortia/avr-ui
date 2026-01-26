@@ -478,8 +478,8 @@ body{
   text-decoration: none;
 }
 .sk-layout__body{
-  width: 100%!important;
-  max-width: 1280px;
+  width: 90%;
+  /* max-width: 1280px; */
   display: flex;
   flex-direction: column;
 }
@@ -490,7 +490,7 @@ body{
   font-family: Inter Variable, Helvetica, Arial, sans-serif;
   font-variation-settings: "slnt" 0, "wght" 200;
   line-height: 1.2;
-  margin: 30px 20px 0 20px;
+  margin: 30px 20px 0 0;
 }
 .sk-layout__body h1 svg{
   color:rgb(68, 74, 101);
@@ -511,6 +511,11 @@ body{
   font-size: 1.6rem;
   /* margin-bottom: 20px; */
 }
+
+.sk-layout__body .sk-layout__filters {
+  margin: 0;
+}
+
 .sk-layout__body .sk-layout__filters a.collapseButton{
   line-height: 1;
   font-size: 14px;
@@ -534,15 +539,14 @@ body{
   margin: 20px auto;
   width: 100%;
 }
-div.sk-search-box{
+.sk-search-box{
   display:inline-block;
-  /* margin-top:60px; */
   background-color: #fff;
   border: var(--bs-border-width) solid var(--bs-border-color);
   border-radius: 8px;
   text-align: center;
   /* width: 100%; */
-  margin: 20px 20px 0 20px;
+  margin-top: 20px;
 }
 .sk-search-box input.sk-search-box__text{
       appearance: none;
@@ -583,6 +587,10 @@ div.sk-search-box{
   /* content: url('data:image/svg+xml; utf8, <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ExpandMoreIcon"><path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path></svg>') */
 }
 
+.avr-container {
+  width: 90% !important;
+  max-width: initial !important;
+}
 
 .sk-item-list{
   margin-left: 20px;
@@ -591,11 +599,38 @@ div.sk-search-box{
   color:#666;
 }
 .sk-item-list-option.is-active .sk-item-list-option__count{
-  font-weight:700!important;
+  font-weight:700 !important;
 }
 .sk-layout__results{
-  background:none!important;
-  box-shadow: none!important;
+  background:none !important;
+  box-shadow: none !important;
+  max-width: 83%;
+}
+
+.sk-searchActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sk-table__wrap {
+  padding: 8px;
+  overflow-x: auto;
+}
+
+@media (max-width: 991px) {
+  .searchView, .sk-searchActions {
+    display: block;
+  }
+  .sk-layout__results{
+    max-width: initial
+  }
+  .sk-layout__body {
+    min-width: initial;
+  }
+  .sk-action-bar, .sk-results-list, .sk-table__wrap {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .sk-table-striped tr:nth-child(2n-1) td{
@@ -638,6 +673,8 @@ div.sk-search-box{
   text-align: left;
   padding: 16px;
   color: rgba(0, 0, 0, 0.87);
+  min-width: 190px;
+  max-width: 250px;
 }
 
 div.panel{

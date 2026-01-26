@@ -1,4 +1,5 @@
 import React from 'react';
+import Table from 'react-bootstrap/Table';
 
 class AntibodyHitsTable extends React.Component {
 
@@ -13,16 +14,16 @@ class AntibodyHitsTable extends React.Component {
         if (i > 0) {
           cs += ', ';
         }
-        cs += `<a href="${url_prefix}${data}${url_suffix}" target="_blank">${data}</a>`;
+        cs += `<div class="text-truncate"><a href="${url_prefix}${data}${url_suffix}" target="_blank">${data}</a></div>`;
       }
       return cs;
     }
 
     function a_href_omap_id(omap_id) {
       if (omap_id in omap_id_linkage) {
-        return `<a href="${omap_id_linkage[omap_id]}" target="_blank">${omap_id}</a>`;
+        return `<div class="text-truncate"><a href="${omap_id_linkage[omap_id]}" target="_blank">${omap_id}</a></div>`;
       } else {
-        return omap_id;
+        return `<div class="text-truncate">${omap_id}</div>`;
       }
     }
 
@@ -46,7 +47,7 @@ class AntibodyHitsTable extends React.Component {
       antibodies += `<td class="tissue_preservation_col">${hit._source.tissue_preservation}</td>`;
       antibodies += '<td class="avr_pdf_filename_col">';
       if (hit._source.avr_pdf_filename != undefined) {
-        antibodies += `<a href="${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}" target="_blank">${hit._source.avr_pdf_filename}</a>`;
+        antibodies += `<div class="text-truncate"><a title="${hit._source.avr_pdf_filename}" href="${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}" target="_blank">${hit._source.avr_pdf_filename}</a></div>`;
       }
       antibodies += '</td>';
       antibodies += '<td class="omap_id_col">';
@@ -95,8 +96,8 @@ class AntibodyHitsTable extends React.Component {
       antibodies += `</tr>`;
     }
     return (
-      <div style={{width: '100%', boxSizing: 'border-box', padding: 8}}>
-        <table id="antibody-results-table" className="sk-table sk-table-striped" style={{width: '100%', boxSizing: 'border-box'}}>
+      <div className='sk-table__wrap'>
+        <Table striped bordered hover id="antibody-results-table" className="sk-table sk-table-striped" style={{width: '100%', boxSizing: 'border-box'}}>
           <thead>
             <tr>
               <th id="target_symbol_col_head">Target Symbol</th>
@@ -134,7 +135,7 @@ class AntibodyHitsTable extends React.Component {
             </tr>
           </thead>
           <tbody dangerouslySetInnerHTML={{__html: antibodies}}/>
-        </table>
+        </Table>
       </div>
     )
   }
