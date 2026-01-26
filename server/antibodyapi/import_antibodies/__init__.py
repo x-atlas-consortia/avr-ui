@@ -35,7 +35,7 @@ def only_printable_and_strip(s: str) -> str:
 @import_antibodies_blueprint.route('/antibodies/import', methods=['POST'])
 def import_antibodies(): # pylint: disable=too-many-branches
     """
-    Currently this is called from 'server/antibodyapi/hubmap/templates/base.html' through the
+    Currently this is called from 'server/antibodyapi/hubmap/templates/upload.html' through the
     <form onsubmit="AJAXSubmit(this);..." enctype="..." action="/antibodies/import" method="post" ...>
 
     NOTE: The maximum .pdf size is currently 10Mb.
@@ -45,10 +45,10 @@ def import_antibodies(): # pylint: disable=too-many-branches
 
     if not session.get('is_authorized'):
         logger.info("User is not authorized.")
-        avr_uploaders_group_id: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
+        avr_uploaders_group_ids: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
         return render_template(
             'unauthorized.html',
-            avr_uploaders_group_id=avr_uploaders_group_id
+            avr_uploaders_group_id=avr_uploaders_group_ids
         )
 
     if 'file' not in request.files:

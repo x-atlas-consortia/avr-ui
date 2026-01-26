@@ -108,7 +108,7 @@ class AntibodyHitsTable extends React.Component {
               <th id="tissue_preservation_col_head">Tissue Preservation</th>
               <th id="avr_pdf_filename_col_head">Validation Report</th>
               <th id="omap_id_col_head">OMAP ID</th>
-              <th id="antibody_hubmap_id_col_head">HuBMAP ID</th>
+              <th id="antibody_hubmap_id_col_head">X-Atlas ID</th>
 
               <th id="host_col_head" style={{"display": display.host}}>Host</th>
               <th id="rrid_col_head" style={{"display": display.rrid}}>RRID</th>

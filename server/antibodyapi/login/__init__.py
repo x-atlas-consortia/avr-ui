@@ -52,12 +52,18 @@ def login():
         #logger.info(f"login(): my_groups: {my_groups}")
         my_group_ids = [g['id'] for g in my_groups]
         is_authorized = False
-        avr_uploaders_group_id: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
-        if avr_uploaders_group_id in my_group_ids:
-            is_authorized = True
+        avr_uploaders_group_ids: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
+        avr_uploaders_group_ids_list = avr_uploaders_group_ids.split(',')
+
+        for avr_uploaders_group_id in avr_uploaders_group_ids_list:
+            if avr_uploaders_group_id in my_group_ids:
+                is_authorized = True
+                break
+            
         logger.info(f"login(): groups: {my_group_ids}; "
                     f"uploader_group: {avr_uploaders_group_id}; "
                     f"is_authorized: {is_authorized}")
+                
 
         session.update(
             name=user_info['name'],

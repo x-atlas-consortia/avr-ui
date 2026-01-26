@@ -25,17 +25,17 @@ def hubmap():
 
     if not session.get('is_authorized'):
         logger.info("User is not authorized.")
-        avr_uploaders_group_id: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
+        avr_uploaders_group_ids: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
         return render_template(
             'unauthorized.html',
-            avr_uploaders_group_id=avr_uploaders_group_id
+            avr_uploaders_group_id=avr_uploaders_group_ids
         )
 
     data_provider_groups = session.get('data_provider_groups')
     if data_provider_groups is not None and len(data_provider_groups) == 1:
         data_provider_groups = None
     return render_template(
-        'base.html',
+        'upload.html',
         token=session['tokens'],
         data_provider_groups=data_provider_groups
     )
