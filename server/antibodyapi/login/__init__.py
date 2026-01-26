@@ -49,7 +49,7 @@ def login():
                 "scope": "openid profile email urn:globus:auth:scope:transfer.api.globus.org:all urn:globus:auth:scope:auth.globus.org:view_identities urn:globus:auth:scope:nexus.api.globus.org:groups urn:globus:auth:scope:groups.api.globus.org:all"
             }) # pylint: disable=line-too-long
             return redirect(auth_uri)
-        #logger.info(f"login(): my_groups: {my_groups}")
+        logger.info(f"login(): my_groups: {my_groups}")
         my_group_ids = [g['id'] for g in my_groups]
         is_authorized = False
         avr_uploaders_group_ids: str = current_app.config['CONSORTIUM_AVR_UPLOADERS_GROUP_ID']
@@ -59,7 +59,7 @@ def login():
             if avr_uploaders_group_id in my_group_ids:
                 is_authorized = True
                 break
-            
+
         logger.info(f"login(): groups: {my_group_ids}; "
                     f"uploader_group: {avr_uploaders_group_id}; "
                     f"is_authorized: {is_authorized}")

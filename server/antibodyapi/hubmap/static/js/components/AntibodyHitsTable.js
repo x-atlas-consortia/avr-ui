@@ -54,6 +54,7 @@ class AntibodyHitsTable extends React.Component {
       antibodies += a_href_omap_id(hit._source.omap_id);
       antibodies += '</td>';
       antibodies += `<td class="antibody_hubmap_id_col">${hit._source.antibody_hubmap_id}</td>`;
+      antibodies += `<td class="consortium_col">${hit._source.consortium || 'HuBMAP'}</td>`;
 
       antibodies += '<td class="host_col" style="display:'+display.host+`;">${hit._source.host}</td>`;
       antibodies += '<td class="rrid_col" style="display:'+display.rrid+`;"><a href="https://scicrunch.org/resolver/RRID:${hit._source.rrid}" target="_blank">${hit._source.rrid}</a></td>`;
@@ -108,8 +109,8 @@ class AntibodyHitsTable extends React.Component {
               <th id="tissue_preservation_col_head">Tissue Preservation</th>
               <th id="avr_pdf_filename_col_head">Validation Report</th>
               <th id="omap_id_col_head">OMAP ID</th>
-              <th id="antibody_hubmap_id_col_head">X-Atlas ID</th>
-
+              <th id="antibody_hubmap_id_col_head">AVR ID</th>
+              <th id="consortium_col_head">Consortium</th>
               <th id="host_col_head" style={{"display": display.host}}>Host</th>
               <th id="rrid_col_head" style={{"display": display.rrid}}>RRID</th>
               <th id="catalog_number_col_head" style={{"display": display.catalog_number}}>Catalog#</th>

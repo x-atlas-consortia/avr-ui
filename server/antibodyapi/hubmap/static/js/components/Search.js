@@ -80,7 +80,7 @@ function Search(props) {
         <p>AVRs were piloted to provide individual antibody validation information for the diverse antibody-based methods employed by HuBMAP members. Importantly, AVRs have become tightly integrated with Organ Mapping Antibody Panels (OMAPs)(<a href="https://humanatlas.io/omap">https://humanatlas.io/omap</a>), a comprehensive panel of curated antibodies that identifies the major anatomical structures and cell types present in a specific organ. The selected antibodies are optimized for a tissue preservation method and multiplexed imaging modality. Both efforts share standardized metadata fields that will facilitate construction of a searchable antibody database. Beginning in 2023, we are excited to open AVR contributions to the larger community, beyond HuBMAP members.</p>
       </div> */}
    
-      <h1>Antibody Validation Report Search</h1>
+      <h1>HuBMAP/SenNet Antibody Validation Report Search</h1>
       <SearchBox
       autofocus={true}
       queryOptions={{analyzer:"standard"}}

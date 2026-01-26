@@ -23,21 +23,22 @@ const AppNavBar = () => {
         <Navbar.Toggle aria-controls="atlas-navbar-nav" />
         <Navbar.Collapse id="atlas-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="https://hubmapconsortium.org/open-working-groups">About AVRs at ARWG</Nav.Link>
-            <Nav.Link href="https://docs.hubmapconsortium.org/avr/index.html">AVRs</Nav.Link>
-            <Nav.Link href="https://zenodo.org/doi/10.5281/zenodo.7418623">AVR SOP</Nav.Link>
-            <Nav.Link href="/upload">Add AVRs</Nav.Link>
-            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+            {/* <Nav.Link href="https://hubmapconsortium.org/open-working-groups">About AVRs at ARWG <i class="bi bi-box-arrow-up-right"></i></Nav.Link> */}
+            {/* <Nav.Link href="https://docs.hubmapconsortium.org/avr/index.html">AVRs <i class="bi bi-box-arrow-up-right"></i></Nav.Link>
+            <Nav.Link href="https://zenodo.org/doi/10.5281/zenodo.7418623">AVR SOP <i class="bi bi-box-arrow-up-right"></i></Nav.Link> */}
+            
+            <NavDropdown title="About AVRs at ARWG" id="basic-nav-dropdown">
+              <NavDropdown.Item href="https://hubmapconsortium.org/open-working-groups">Open Working Groups</NavDropdown.Item>
+              <NavDropdown.Item href="https://docs.hubmapconsortium.org/avr/index.html">
+                Documentation
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
+              <NavDropdown.Item href="https://zenodo.org/doi/10.5281/zenodo.7418623">AVR SOP</NavDropdown.Item>
+              {/* <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
+              </NavDropdown.Item> */}
+            </NavDropdown>
+            <Nav.Link href="/upload">Add / Upload AVRs</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

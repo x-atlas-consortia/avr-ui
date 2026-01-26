@@ -9,8 +9,8 @@
   padding-bottom: 10px;
 }
 
-body {
-  background-color: #fafafa;
+body, .sk-layout {
+  background-color: #fafafa !important;
 }
 
 .tooltip
