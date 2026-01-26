@@ -148,6 +148,10 @@ def hubmap_search():
         banner_message=banner_message
     )
 
+@hubmap_blueprint.route('/static/atlas-logo.png')
+def logo():
+    return send_from_directory(os.path.join(current_app.root_path, 'hubmap', 'static'), 'atlas-logo.png',
+                               mimetype='image/png')
 
 # https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/
 @hubmap_blueprint.route('/static/favicon.ico')
