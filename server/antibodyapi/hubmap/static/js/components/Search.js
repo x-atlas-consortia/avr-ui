@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SearchkitManager, SearchkitProvider, SearchBox, Hits, Layout, TopBar, LayoutBody, SideBar,
   HierarchicalMenuFilter, RefinementListFilter, ActionBar, LayoutResults, HitsStats, Panel,
@@ -9,6 +9,8 @@ import { AdditionalColumns } from './AdditionalColumns';
 import DownloadFile from './DownloadFile';
 import AppNavBar from './AppNavBar';
 import Popup from 'reactjs-popup';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import { useCookies } from 'react-cookie';
 import CookieConsent from 'react-cookie-consent';
 
@@ -50,6 +52,9 @@ function collapseAllFilters() {
 }
 
 function Search(props) {
+  const [modalShow, setModalShow] = React.useState(false)
+  const [modalBody, setModalBody] = useState(null)
+
   const options = { showEllipsis: true, showLastIcon: false, showNumbers: true }
   //console.info('Search display: ', display);
   const [cookies] = useCookies([]);
@@ -192,18 +197,11 @@ function Search(props) {
           </ActionBarRow>
         </ActionBar>
 
-        <Popup trigger={<button className="button-placement">Configure Columns</button>}
-              contentStyle={{width: "280px"}}
-              modal>
-          {close => (
-              <div className="modal form-border">
-                <button className="close" onClick={close}>
-                  &times;
-                </button>
-                <AdditionalColumns/>
-              </div>
-          )}
-        </Popup>
+        <span className='float-right'><Button variant="primary" onClick={() => setModalShow(true)}>
+          Configure Columns
+        </Button></span>
+        <AdditionalColumns show={modalShow}
+        onHide={() => setModalShow(false)}/>
 
           <Hits
             listComponent={AntibodyHitsTable}

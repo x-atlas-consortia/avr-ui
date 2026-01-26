@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Checkbox } from './Checkbox';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
-function AdditionalColumns() {
+function AdditionalColumns(props) {
 
   const checkbox_props = [
     {element:"clone_id", label:"Clone ID"},
@@ -30,7 +32,7 @@ function AdditionalColumns() {
   ];
 
   const state_values = Object.assign({}, ...checkbox_props.map((x) =>
-    ({[x.element]: document.getElementById(x.element + '_col_head').style.display==='table-cell'?true:false})
+    ({[x.element]: document.getElementById(x.element + '_col_head')?.style?.display==='table-cell'?true:false})
     ));
   const [checked, setChecked] = useState(state_values);
 
@@ -77,14 +79,24 @@ function AdditionalColumns() {
   };
 
   return (
-     <div>
-        <div className="header">
-            <h3>Additional Columns</h3>
-        </div>
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Additional Columns
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
         <div>
-            <button onClick={setAll}>Set All</button>
+            <Button onClick={setAll} variant="primary">Set All</Button>
+           
             &nbsp;
-            <button onClick={clearAll}>Clear All</button>
+            <Button onClick={clearAll} variant="outline-primary">Clear All</Button>
+           
         </div>
         <div className="content div-border">
             {checkbox_props.map(prop =>
@@ -97,7 +109,11 @@ function AdditionalColumns() {
                />
             )}
         </div>
-    </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

@@ -16,11 +16,13 @@ function Checkbox(props) {
 
   return (
     <div>
-      <input type="checkbox"
+      <input
+      className='form-check-input'
+       type="checkbox"
              id={`${elt}_checkbox_id`}
              onChange={handleToggle}
              checked={isCheckedCheck()}
-      />
+      /> &nbsp;
       {label}
     </div>
   );
