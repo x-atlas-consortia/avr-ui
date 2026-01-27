@@ -1,5 +1,6 @@
 import csv
 import os
+import json
 from flask import (
     abort, Blueprint, current_app, jsonify, make_response,
     redirect, request, session, url_for, render_template
@@ -42,6 +43,19 @@ def import_antibodies(): # pylint: disable=too-many-branches
     """
     if not session.get('is_authenticated'):
         return redirect(url_for('login'))
+    
+    allowable_consortiums_str: str = current_app.config['ALLOWABLE_CONSORTIUMS']
+    if allowable_consortiums_str is None:
+       logger.info("Invalid key ALLOWABLE_CONSORTIUMS")
+       abort(json_error('Server configuration error for allowable consortiums.', 500)) 
+
+    allowable_consortiums_dict = {}
+    try:
+        allowable_consortiums_dict = json.loads(allowable_consortiums_str) 
+        allowable_consortiums_keys = list(allowable_consortiums_dict.keys())
+        allowable_consortiums_values = list(allowable_consortiums_dict.values())
+    except Exception as e:
+        abort(json_error(str(e), 500))
 
     if not session.get('is_authorized'):
         logger.info("User is not authorized.")
@@ -94,10 +108,22 @@ def import_antibodies(): # pylint: disable=too-many-branches
                         try:
                             row['vendor_id'] = find_or_create_vendor(cur, row['vendor'])
                         except KeyError:
-                            abort(json_error(f"TSV file row# {row_i}: Problem processing Vendor field", 406))
+                            raise ValueError(f"TSV file row# {row_i}: Problem processing `vendor` field")
                         # Save this for index_antibody() Elasticsearch, but remove from for DB store...
                         vendor_name: str = row['vendor']
                         del row['vendor']
+
+                        # validate the consortium
+                        if 'consortium' not in row:
+                            raise ValueError('TSV Header Error: Missing `consortium` header field.')
+                        row_consortium = row['consortium']
+             
+                        if row_consortium is None or row_consortium == '' or (row_consortium.lower() not in allowable_consortiums_keys):
+                            raise ValueError(f"TSV file row# {row_i}: Invalid `consortium` value. Allowable {', '.join(allowable_consortiums_values)}")
+                      
+                        # normalize row spelling
+                        row['consortium'] = allowable_consortiums_dict[row_consortium.lower()]
+
                         # The .tsv file contains a 'target_symbol' field that is (possibly) resolved into a different
                         # 'target_symbol' by the UBKG lookup during validation. Here, whatever the user entered is
                         # replaced by the 'target_symbol' returned by UBKG.
@@ -174,9 +200,14 @@ def import_antibodies(): # pylint: disable=too-many-branches
                             except Exception as index_err:
                                 logger.debug(f"Elasticsearch indexing failed on {row_i} updating next_version_id")
             cur.close()
+    except ValueError as e:
+        conn.rollback()
+        conn.close()
+        abort(json_error(str(e), 406))
     except Exception as e:
         conn.rollback()
         conn.close()
+        logger.debug(f"Exception {e}")
         abort(json_error(str(e), 500))
     finally:
         if not conn.closed:

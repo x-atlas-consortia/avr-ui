@@ -2,6 +2,7 @@ module.exports = {
     entry: {
         search: "./antibodyapi/hubmap/static/js/SearchPage.js",
         unauthorized: "./antibodyapi/hubmap/static/js/Unauthorized.js",
+        upload: "./antibodyapi/hubmap/static/js/Upload.js",
     },
     module: {
         rules: [

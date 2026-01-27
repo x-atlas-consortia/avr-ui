@@ -87,7 +87,7 @@ tsv_header_keys: List[str] = [
     'vendor', 'catalog_number', 'lot_number', 'recombinant', 'concentration_value',
     'dilution_factor', 'conjugate', 'rrid', 'method', 'tissue_preservation', 'protocol_doi', 'manuscript_doi',
     'author_orcids', 'vendor_affiliation', 'organ', 'organ_uberon_id', 'antigen_retrieval', 'avr_pdf_filename',
-    'omap_id', 'cycle_number', 'fluorescent_reporter', 'previous_version_id'
+    'omap_id', 'cycle_number', 'fluorescent_reporter', 'previous_version_id', 'consortium'
 ]
 
 
