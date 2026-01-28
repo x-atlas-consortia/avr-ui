@@ -103,7 +103,7 @@ def import_antibodies(): # pylint: disable=too-many-branches
                     for row_dr in csv.DictReader(tsvfile, delimiter='\t'):
                         # silently drop any non-printable characters like Trademark symbols from Excel documents
                         # and make all the keys lowercase so comparison is easy...
-                        row = {k.lower(): only_printable_and_strip(v) for (k, v) in row_dr.items()}
+                        row = {k.lower().strip(): only_printable_and_strip(v) for (k, v) in row_dr.items()}
                         row_i += 1
                         try:
                             row['vendor_id'] = find_or_create_vendor(cur, row['vendor'])
