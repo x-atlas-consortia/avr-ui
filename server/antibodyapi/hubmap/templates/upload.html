@@ -101,7 +101,7 @@
     <div role="alert" class="fade alert show">
       <div class="alert-heading h4">Upload Results</div>
       <div id="upload-results"></div>
-      <a class="flex mx-auto btn btn-primary border-0 py-2 px-8 rounded text-lg" href="/upload">Retry</a>&nbsp;
+      <a id="js-retryBtn" class="flex mx-auto btn btn-primary border-0 py-2 px-8 rounded text-lg" href="/upload">Retry</a>&nbsp;
       <a class="flex mx-auto btn btn-secondary border-0 py-2 px-8 rounded text-lg" href="/">Back to Search Page</a>
     </div>
 
@@ -186,14 +186,15 @@ function ajaxSuccess (event) {
     jQuery('#upload-results').html(responsetable).parent().addClass(cssClassErr);
     return;
   }
+  let retryBtnText = 'Retry'
   if (http_status == 201) {
       var csv_content = "antibody_name,antibody_hubmap_id\n";
       responsetable += '<p>All entities in the Andibody Files have been successfully uploaded.</p>';
       responsetable += '<br>';
-      responsetable += '<table><tr><th style="padding-right: 30px;">AVR Document</th><th>X-Atlas ID</th></tr>';
+      responsetable += '<table class="table table-striped"><tr><th>AVR Document</th><th>X-Atlas ID</th></tr>';
       jQuery.each(jsonresponse.antibodies, function(name, value) {
         responsetable += '<tr>';
-        responsetable += '<td style="padding-right: 30px;">' + value.antibody_name + '</td>';
+        responsetable += '<td>' + value.antibody_name + '</td>';
         responsetable += '<td>' + value.antibody_hubmap_id + '</td>';
         responsetable += '</tr>';
         csv_content += value.antibody_name + ',' + value.antibody_hubmap_id + '\n';
@@ -203,7 +204,7 @@ function ajaxSuccess (event) {
         responsetable += '<br>';
         responsetable += '<p>The following .pdf files that were uploaded were not found in the .tsv files, and so were not saved.</p>';
         responsetable += '<br>';
-        responsetable += '<table><tr><th>File Name</th></tr>';
+        responsetable += '<table class="table table-striped"><tr><th>File Name</th></tr>';
         jQuery.each(jsonresponse.pdf_files_not_processed, function(index, value) {
           responsetable += '<tr>';
           responsetable += '<td>' + value + '</td>';
@@ -211,7 +212,8 @@ function ajaxSuccess (event) {
         })
         responsetable += '</table>';
       }
-      cssClassErr = 'alert-success'
+      cssClassErr = jsonresponse.pdf_files_not_processed.length > 0 ? 'alert-warning' : 'alert-success'
+      retryBtnText = 'Upload More'
   } else if (http_status == 406) {
       responsetable += '<div>';
       responsetable += '<p><b>Error</b></p>';
@@ -225,6 +227,7 @@ function ajaxSuccess (event) {
       responsetable += '</div>';
       responsetable += '<br>';
   }
+  jQuery('#js-retryBtn').text(retryBtnText)
   jQuery('#upload-results').html(responsetable).parent().addClass(cssClassErr);
 }
 </script>

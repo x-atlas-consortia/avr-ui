@@ -196,7 +196,8 @@ function Search(props) {
           </ActionBarRow>
         </ActionBar>
 
-        <div><Button variant="primary" onClick={() => setModalShow(true)}>
+        <div><Button className='mb-2' variant="primary" onClick={() => setModalShow(true)}>
+          <i class="bi bi-table"></i>&nbsp;
           Configure Columns
         </Button></div>
         <AdditionalColumns show={modalShow}

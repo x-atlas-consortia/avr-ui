@@ -92,7 +92,8 @@ class DownloadFile extends SearchkitComponent {
         return (
             <div id="downloadfile">
                 <button onClick={this.downloadData}
-                        className={"button-placement"}>
+                        className={"button-placement btn btn-primary"}>
+                            <i class="bi bi-file-earmark-arrow-down"></i> &nbsp;
                     Download AVR Information as CSV
                 </button>
                 <p/>
