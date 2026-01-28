@@ -1,6 +1,6 @@
 from flask import g, Flask
 import logging
-from antibodyapi.hubmap import hubmap_blueprint
+from antibodyapi.webui import webui_blueprint
 from antibodyapi.import_antibodies import import_antibodies_blueprint
 from antibodyapi.list_antibodies import list_antibodies_blueprint
 from antibodyapi.login import login_blueprint
@@ -24,7 +24,7 @@ def create_app(testing=False):
         # this file lives in '/instance/app.conf'
         app.config.from_pyfile('app.conf')
 
-    app.register_blueprint(hubmap_blueprint)
+    app.register_blueprint(webui_blueprint)
     app.register_blueprint(import_antibodies_blueprint)
     app.register_blueprint(list_antibodies_blueprint)
     app.register_blueprint(login_blueprint)

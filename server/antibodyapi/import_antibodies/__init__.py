@@ -36,7 +36,7 @@ def only_printable_and_strip(s: str) -> str:
 @import_antibodies_blueprint.route('/antibodies/import', methods=['POST'])
 def import_antibodies(): # pylint: disable=too-many-branches
     """
-    Currently this is called from 'server/antibodyapi/hubmap/templates/upload.html' through the
+    Currently this is called from 'server/antibodyapi/webui/templates/upload.html' through the
     <form onsubmit="AJAXSubmit(this);..." enctype="..." action="/antibodies/import" method="post" ...>
 
     NOTE: The maximum .pdf size is currently 10Mb.

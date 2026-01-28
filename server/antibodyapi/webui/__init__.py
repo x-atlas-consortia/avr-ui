@@ -7,7 +7,7 @@ from antibodyapi.utils.elasticsearch import execute_query
 import logging
 import html5lib
 
-hubmap_blueprint = Blueprint('hubmap', __name__, template_folder='templates')
+webui_blueprint = Blueprint('hubmap', __name__, template_folder='templates')
 logger = logging.getLogger(__name__)
 
 
@@ -15,7 +15,7 @@ def bad_request_error(err_msg):
     abort(400, description=err_msg)
 
 
-@hubmap_blueprint.route('/upload')
+@webui_blueprint.route('/upload')
 def hubmap():
     # replace by the correct way to check token validity.
     if not session.get('is_authenticated'):
@@ -41,7 +41,7 @@ def hubmap():
     )
 
 
-@hubmap_blueprint.route('/')
+@webui_blueprint.route('/')
 def hubmap_search():
     # replace by the correct way to check token validity.
     # authenticated = session.get('is_authenticated')
@@ -148,25 +148,25 @@ def hubmap_search():
         banner_message=banner_message
     )
 
-@hubmap_blueprint.route('/static/atlas-logo.png')
+@webui_blueprint.route('/static/atlas-logo.png')
 def logo():
-    return send_from_directory(os.path.join(current_app.root_path, 'hubmap', 'static'), 'atlas-logo.png',
+    return send_from_directory(os.path.join(current_app.root_path, 'webui', 'static'), 'atlas-logo.png',
                                mimetype='image/png')
 
 # https://flask.palletsprojects.com/en/2.0.x/patterns/favicon/
-@hubmap_blueprint.route('/static/favicon.ico')
+@webui_blueprint.route('/static/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(current_app.root_path, 'hubmap', 'static'), 'favicon.ico',
+    return send_from_directory(os.path.join(current_app.root_path, 'webui', 'static'), 'favicon.ico',
                                mimetype='image/vnd.microsoft.icon')
 
 
-@hubmap_blueprint.route('/css/app.css')
+@webui_blueprint.route('/css/app.css')
 def css():
-    return send_from_directory(os.path.join(current_app.root_path, 'hubmap', 'css'), 'app.css',
+    return send_from_directory(os.path.join(current_app.root_path, 'webui', 'css'), 'app.css',
                                mimetype='text/css')
 
 
-@hubmap_blueprint.route('/_search', methods=['GET', 'POST'])
+@webui_blueprint.route('/_search', methods=['GET', 'POST'])
 def search():
     # replace by the correct way to check token validity.
     # authenticated = session.get('is_authenticated')

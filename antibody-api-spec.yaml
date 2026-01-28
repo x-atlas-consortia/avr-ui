@@ -1,16 +1,16 @@
 openapi: 3.0.0
 info:
-  description: 'The HuBMAP Antibody API is a standard RESTful web service with create operations.<br><br>'
+  description: 'The Antibody Validation Report (AVR) UI is a standard RESTful web service with create operations.<br><br>'
   version: 1.0.0
-  title: HuBMAP Antibody API
+  title: Antibody Validation Report (AVR) UI
   contact:
     name: HuBMAP Help Desk
     email: api-developers@hubmapconsortium.org
   license:
     name: MIT License
-    url: 'https://github.com/hubmapconsortium/antibody-api/blob/master/license.txt'
+    url: 'https://github.com/x-atlas-consortia/avr-ui/blob/master/license.txt'
 servers:
-  - url: 'https://avr.hubmapconsortium.org/'
+  - url: 'https://avr.xconsortia.org/'
 components:
   securitySchemes:
     bearerAuth:

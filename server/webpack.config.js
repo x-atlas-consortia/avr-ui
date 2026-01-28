@@ -1,8 +1,8 @@
 module.exports = {
     entry: {
-        search: "./antibodyapi/hubmap/static/js/SearchPage.js",
-        unauthorized: "./antibodyapi/hubmap/static/js/Unauthorized.js",
-        upload: "./antibodyapi/hubmap/static/js/Upload.js",
+        search: "./antibodyapi/webui/static/js/SearchPage.js",
+        unauthorized: "./antibodyapi/webui/static/js/Unauthorized.js",
+        upload: "./antibodyapi/webui/static/js/Upload.js",
     },
     module: {
         rules: [
