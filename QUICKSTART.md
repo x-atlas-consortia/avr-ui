@@ -5,7 +5,7 @@
 ```
 cp ./instance/example.app.conf ./instance/app.conf # Update values
 cp example.env .env # use corresponding db values from app.conf in .env
-./scripts/run_local.sh
+./scripts/run_local.sh # http://localhost:5000/
 ```
 
 ## Run flask locally (outside of docker)
