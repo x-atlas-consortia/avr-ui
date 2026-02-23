@@ -97,14 +97,14 @@ def import_antibodies(): # pylint: disable=too-many-branches
                         try:
                             row['vendor_id'] = find_or_create_vendor(cur, row['vendor'])
                         except KeyError:
-                            raise ValueError(f"TSV file row# {row_i}: Problem processing `vendor` field")
+                            raise ValueError(f"TSV file row number `{row_i}`: Problem processing `vendor` field")
                         # Save this for index_antibody() Elasticsearch, but remove from for DB store...
                         vendor_name: str = row['vendor']
                         del row['vendor']
 
                         if 'cell_type' in row:
                             cell_type = row['cell_type'].upper()
-                            cell_type_err = f"TSV file row# {row_i}: Problem processing `cell_type` field with value `{cell_type}`"
+                            cell_type_err = f"TSV file row number `{row_i}`: Problem processing `cell_type` field with value `{cell_type}`"
                             try:
                                 cell_type_url = f"{app.config['UBKG_API_URL']}/celltypes/{cell_type.replace('CL:', '')}" 
                                 response = requests.get(
