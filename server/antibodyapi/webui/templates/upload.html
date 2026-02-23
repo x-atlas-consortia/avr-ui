@@ -93,7 +93,7 @@
   <section class="avr-container mt-5 container hidden" id="loading-screen">
     <div role="alert" class="fade alert alert-info show">
       <div class="alert-heading h4">Uploading now...</div>
-      <p>This may take a few seconds per line in the .tsv file.</p>
+      <p>This may take a few seconds per line in the <code>.tsv</code> file.</p>
     </div>
   </section>
 
@@ -162,6 +162,10 @@ function AJAXSubmit (oFormElement) {
   }
 }
 
+function backticksToCode(msg) {
+  return msg.replace(/`([^`]*)`/g, '<code>$1</code>')
+}
+
 function ajaxSuccess (event) {
   jQuery('#loading-screen').addClass('hidden');
   jQuery('#upload-results-block').removeClass('hidden');
@@ -180,7 +184,7 @@ function ajaxSuccess (event) {
 
     responsetable += '<div>';
     responsetable += `<p><b>${errorTitle}</b></p>`;
-    responsetable += `<p>${errorMsg}</p>`;
+    responsetable += `<p>${backticksToCode(errorMsg)}</p>`;
     responsetable += '</div><br>';
 
     jQuery('#upload-results').html(responsetable).parent().addClass(cssClassErr);
@@ -217,7 +221,7 @@ function ajaxSuccess (event) {
   } else if (http_status == 406) {
       responsetable += '<div>';
       responsetable += '<p><b>Error</b></p>';
-      responsetable += '<p>' + jsonresponse.message + '</p>';
+      responsetable += '<p>' + backticksToCode(jsonresponse.message) + '</p>';
       responsetable += '</div>';
       responsetable += '<br>';
   } else {

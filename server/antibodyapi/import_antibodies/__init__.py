@@ -104,18 +104,16 @@ def import_antibodies(): # pylint: disable=too-many-branches
 
                         if 'cell_type' in row:
                             cell_type = row['cell_type'].upper()
-                            cell_type_err = f"TSV file row# {row_i}: Problem processing `cell_type` field with value {cell_type}"
+                            cell_type_err = f"TSV file row# {row_i}: Problem processing `cell_type` field with value `{cell_type}`"
                             try:
                                 cell_type_url = f"{app.config['UBKG_API_URL']}/celltypes/{cell_type.replace('CL:', '')}" 
                                 response = requests.get(
                                     cell_type_url
                                 )
                                 if not response.ok:
-                                    raise ValueError(f". Invalid cell type.") 
-                             
-                                
+                                    raise ValueError(f"{cell_type_err}. Invalid cell type.") 
                             except Exception as http_e:
-                               raise ValueError(f". {http_e}") 
+                               raise ValueError(f"{http_e}") 
 
                         # The .tsv file contains a 'target_symbol' field that is (possibly) resolved into a different
                         # 'target_symbol' by the UBKG lookup during validation. Here, whatever the user entered is

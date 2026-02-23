@@ -2,7 +2,6 @@ import Search from "./components/Search";
 import React from "react";
 import ReactDOM from "react-dom";
 import { CookiesProvider } from "react-cookie";
-import Alert from 'react-bootstrap/Alert';
 import AppNavBar from './components/AppNavBar';
 import Container from "react-bootstrap/esm/Container";
 
