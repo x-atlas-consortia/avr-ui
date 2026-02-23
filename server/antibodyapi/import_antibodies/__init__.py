@@ -111,7 +111,7 @@ def import_antibodies(): # pylint: disable=too-many-branches
                                     cell_type_url
                                 )
                                 if not response.ok:
-                                    raise ValueError(f"{cell_type_err}. Invalid cell type.") 
+                                    raise ValueError(f"{cell_type_err}. Invalid cell type.\nPlease refer to the cell types ontology for a list of valid cell types and associated codes. {app.config['UBKG_CELL_TYPES_ONTOLOGY_URL']}") 
                             except Exception as http_e:
                                raise ValueError(f"{http_e}") 
 
