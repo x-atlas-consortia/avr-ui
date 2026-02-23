@@ -503,7 +503,7 @@ def call_cedar_api(file_obj):
                 for e in cedar_json["reporting"]
             ]
     
-            error_message = "Validation errors found:\n" + "\n".join(error_strings)
+            error_message = f"Validation errors found:\n {"\n".join(error_strings)} \n Please refer to the documentation for details {current_app.config['CEDAR_VALIDATION_TEMPLATE_SPEC_URL']}"
             
             abort(json_error(error_message, 400))
     except HTTPException:

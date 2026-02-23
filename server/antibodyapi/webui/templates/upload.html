@@ -162,8 +162,13 @@ function AJAXSubmit (oFormElement) {
   }
 }
 
-function backticksToCode(msg) {
-  return msg.replace(/`([^`]*)`/g, '<code>$1</code>').split('\n').join('<br />')
+const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+function plaintextToHtml(msg) {
+  const linkedText = msg.replace(urlRegex, function(url) {
+    return '<a href="' + url + '" class="text-truncate text-decoration-none">' + url + ' <i class="bi bi-box-arrow-up-right"></i></a>';
+  })
+  return linkedText.replace(/`([^`]*)`/g, '<code>$1</code>').split('\n').join('<br />')
 }
 
 function ajaxSuccess (event) {
@@ -184,7 +189,7 @@ function ajaxSuccess (event) {
 
     responsetable += '<div>';
     responsetable += `<p><b>${errorTitle}</b></p>`;
-    responsetable += `<p>${backticksToCode(errorMsg)}</p>`;
+    responsetable += `<p>${plaintextToHtml(errorMsg)}</p>`;
     responsetable += '</div><br>';
 
     jQuery('#upload-results').html(responsetable).parent().addClass(cssClassErr);
@@ -221,13 +226,13 @@ function ajaxSuccess (event) {
   } else if (http_status == 406 || http_status == 400) {
       responsetable += '<div>';
       responsetable += '<p><b>Error</b></p>';
-      responsetable += '<p>' + backticksToCode(jsonresponse.message) + '</p>';
+      responsetable += '<p>' + plaintextToHtml(jsonresponse.message) + '</p>';
       responsetable += '</div>';
       responsetable += '<br>';
   } else {
       responsetable += '<div>';
       responsetable += '<p><b>Unexpected Error</b></p>';
-      responsetable += '<p>Received from the server: ' + backticksToCode(jsonresponse.message) + '</p><p>HTTP Status: <code>' + http_status + '</code></p>';
+      responsetable += '<p>Received from the server: ' + plaintextToHtml(jsonresponse.message) + '</p><p>HTTP Status: <code>' + http_status + '</code></p>';
       responsetable += '</div>';
       responsetable += '<br>';
   }
