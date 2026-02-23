@@ -499,7 +499,7 @@ def call_cedar_api(file_obj):
             abort(json_error(f"Error parsing resonse from Cedar: {e}", 500))
         if cedar_json.get("reporting"):
             error_strings = [
-                f"Row {e['row']}, Column '{e['column']}': {e['value']} is invalid ({e['errorType']})"
+                f"Row number `{e['row']}`, Column `{e['column']}`: `'{e['value']}'` is invalid ({e['errorType']})"
                 for e in cedar_json["reporting"]
             ]
     

@@ -227,7 +227,7 @@ function ajaxSuccess (event) {
   } else {
       responsetable += '<div>';
       responsetable += '<p><b>Unexpected Error</b></p>';
-      responsetable += '<p>Received from the server: ' + jsonresponse.message + '; HTTP Status: ' + http_status + '</p>';
+      responsetable += '<p>Received from the server: ' + backticksToCode(jsonresponse.message).split('\n').join('<br />') + '</p><p>HTTP Status: <code>' + http_status + '</code></p>';
       responsetable += '</div>';
       responsetable += '<br>';
   }
