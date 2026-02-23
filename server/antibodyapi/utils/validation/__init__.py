@@ -97,7 +97,7 @@ tsv_header_keys: List[str] = [
 def validate_row_data_item_isprintable(row_i: int, item: str) -> None:
     if not item.isprintable():
         abort(json_error(
-            f"TSV file row# {row_i}: non-printable characters are not permitted in a data item",
+            f"TSV file row number `{row_i}`: non-printable characters are not permitted in a data item",
             406))
 
 
@@ -106,7 +106,7 @@ def validate_row_data_item_not_linebreaks(row_i: int, item: str) -> None:
     lines: List[str] = item.splitlines()
     if len(lines) > 1:
         abort(json_error(
-            f"TSV file row# {row_i}: line break characters are not permitted in a data item",
+            f"TSV file row number `{row_i}`: line break characters are not permitted in a data item",
             406))
 
 
@@ -132,7 +132,7 @@ def validate_row_data_required_fields(row_i: int, row: dict) -> None:
     concentration_value_present: bool = value_present_in_row('concentration_value', row)
     dilution_factor_present: bool = value_present_in_row('dilution_factor', row)
     if not (concentration_value_present ^ dilution_factor_present):
-        abort(json_error(f"TSV file row# {row_i}: 'concentration_value' or 'dilution_factor'"
+        abort(json_error(f"TSV file row number `{row_i}`: 'concentration_value' or 'dilution_factor'"
                          " but not both, and one must be present", 406))
 
     organ_present: bool = value_present_in_row('organ', row)
@@ -143,13 +143,13 @@ def validate_row_data_required_fields(row_i: int, row: dict) -> None:
     clone_id: str = row['clone_id']
     if (clonality == 'monoclonal' and len(clone_id) == 0) or\
             (clonality != 'monoclonal' and len(clone_id) > 0):
-        abort(json_error(f"TSV file row# {row_i}: When clonality is 'monoclonal' then 'clone_id'"
+        abort(json_error(f"TSV file row number `{row_i}`: When clonality is 'monoclonal' then 'clone_id'"
                          " must be specified otherwise 'clone_id' should not be specified", 406))
 
     # if 'organ' is present then 'organ_uberon_id' must be present.
     organ_uberon_id_present: bool = value_present_in_row('organ_uberon_id', row)
     if organ_present ^ organ_uberon_id_present:
-        abort(json_error(f"TSV file row# {row_i}: Both 'organ' and 'organ_uberon_id'"
+        abort(json_error(f"TSV file row number `{row_i}`: Both 'organ' and 'organ_uberon_id'"
                          " must be present if any one of them are present", 406))
 
     # 'cycle_number' and 'fluorescent_reporter' are required fields if 'omap_id' is present.
@@ -157,7 +157,7 @@ def validate_row_data_required_fields(row_i: int, row: dict) -> None:
     # fluorescent_reporter_present: bool = value_present_in_row('fluorescent_reporter', row)
     # omap_id_present: bool = value_present_in_row('omap_id', row)
     # if omap_id_present and not (cycle_number_present and fluorescent_reporter_present):
-    #     abort(json_error(f"TSV file row# {row_i}: 'cycle_number' and 'fluorescent_reporter'"
+    #     abort(json_error(f"TSV file row number `{row_i}`: 'cycle_number' and 'fluorescent_reporter'"
     #                      " are required fields if 'omap_id' is present", 406))
 
 
@@ -173,7 +173,7 @@ def validate_row_data(row_i: int, row: dict) -> None:
     # TODO: Later normalize this so that when it's stored in the DB it's either 'y' or 'n'
     canonicalize_yn_response = CanonicalizeYNResponse()
     if canonicalize_yn_response.canonicalize(row['recombinant']) is None:
-        abort(json_error(f"TSV file row# {row_i}: recombinant value '{row['recombinant']}'"
+        abort(json_error(f"TSV file row number `{row_i}`: recombinant value '{row['recombinant']}'"
                          f" is not one of: {', '.join(canonicalize_yn_response.valid())}", 406))
 
 
@@ -218,12 +218,12 @@ def validate_target(row_i: int, target: str, ubkg_api_url: str) -> dict:
             target_aliases: list = [target_symbol] + response_json["symbol-alias"] + response_json["symbol-previous"]
             return {target: {"target_symbol": target_symbol, "target_aliases": target_aliases}}
         elif response.status_code == 404:
-            abort(json_error(f"TSV file row# {row_i}: target_symbol '{target}' is not found", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: target_symbol '{target}' is not found", 406))
         else:
-            abort(json_error(f"TSV file row# {row_i}: Problem encountered validating target_symbol '{target}'", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating target_symbol '{target}'", 406))
     except requests.ConnectionError as error:
         # TODO: This should probably return a 502 and the frontend needs to be modified to handle it.
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered validating target_symbol '{target}'", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating target_symbol '{target}'", 406))
     finally:
         if response is not None:
             response.close()
@@ -242,12 +242,12 @@ def validate_previous_version_id(row_i: int, previous_version_id: str, cur) -> N
 
     except Exception as e:
         logger.exception(f"validate_previous_version_id: Unexpected error: {e}")
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered while validating previous_revision_hubmap_id", 500))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered while validating previous_revision_hubmap_id", 500))
     
     if result is None:
-            abort(json_error(f"TSV file row# {row_i}: previous_revision_hubmap_id '{previous_version_id}' does not exist", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: previous_revision_hubmap_id '{previous_version_id}' does not exist", 406))
     elif result[0] is not None:
-        abort(json_error(f"TSV file row# {row_i}: previous_version_id '{previous_version_id}' "
+        abort(json_error(f"TSV file row number `{row_i}`: previous_version_id '{previous_version_id}' "
                             f"already has a newer version specified (next_revision_hubmap_id='{result[0]}')", 406))
 
 
@@ -264,12 +264,12 @@ def validate_uniprot_accession_number(row_i: int, uniprot_accession_number: str)
         response = requests.get(uniprot_url, headers={"Accept": "application/json"}, verify=False)
         # https://www.uniprot.org/help/api_retrieve_entries
         if response.status_code == 404:
-            abort(json_error(f"TSV file row# {row_i}: Uniprot Accession Number"
+            abort(json_error(f"TSV file row number `{row_i}`: Uniprot Accession Number"
                              f" '{uniprot_accession_number}' is not found in catalogue",
                              406))
     except requests.ConnectionError as error:
         # TODO: This should probably return a 502 and the frontend needs to be modified to handle it.
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered validating Uniprot Accession Number", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating Uniprot Accession Number", 406))
     finally:
         if response is not None:
             response.close()
@@ -291,10 +291,10 @@ def validate_orcid(row_i: int, orcid: str) -> None:
         response = requests.get(orcid_url, headers={"Accept": "application/json"}, verify=False)
         # TODO: 302
         if response.status_code == 404:
-            abort(json_error(f"TSV file row# {row_i}: ORCID '{orcid}' is not found in catalogue", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: ORCID '{orcid}' is not found in catalogue", 406))
     except requests.ConnectionError as error:
         # TODO: This should probably return a 502 and the frontend needs to be modified to handle it.
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered fetching ORCID", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered fetching ORCID", 406))
     finally:
         if response is not None:
             response.close()
@@ -307,10 +307,10 @@ def validate_rrid(row_i: int, rrid: str) -> None:
         logger.debug(f'validate_rrid() URL: {rrid_url}')
         response = requests.get(rrid_url, headers={"Accept": "application/json"}, verify=False)
         if response.status_code != 200:
-            abort(json_error(f"TSV file row# {row_i}: RRID '{rrid}' is not found in catalogue", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: RRID '{rrid}' is not found in catalogue", 406))
     except requests.ConnectionError as error:
         # TODO: This should probably return a 502 and the frontend needs to be modified to handle it.
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered validating RRID '{rrid}'", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating RRID '{rrid}'", 406))
     finally:
         if response is not None:
             response.close()
@@ -341,16 +341,16 @@ def validate_doi(row_i: int, original_doi: str) -> None:
         doi: str = canonicalize_doi.canonicalize(original_doi)
         if doi is None:
             abort(json_error(
-                f"TSV file row# {row_i}: DOI '{original_doi}' none of the prefixes {','.join(canonicalize_doi.valid())} matched", 406))
+                f"TSV file row number `{row_i}`: DOI '{original_doi}' none of the prefixes {','.join(canonicalize_doi.valid())} matched", 406))
         doi_url: str = f"{doi_url_base}{quote(doi)}?type=URL"
         logger.debug(f'validate_doi() URL: {doi_url}')
         response = requests.get(doi_url, headers={"Accept": "application/json"}, verify=False)
         response_json: dict = response.json()
         if response.status_code != 200 or 'responseCode' not in response_json or response_json['responseCode'] != 1:
-            abort(json_error(f"TSV file row# {row_i}: DOI '{original_doi}' is not found in catalogue", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: DOI '{original_doi}' is not found in catalogue", 406))
     except requests.ConnectionError as error:
         # TODO: This should probably return a 502 and the frontend needs to be modified to handle it.
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered validating DOI '{original_doi}'", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating DOI '{original_doi}'", 406))
     finally:
         if response is not None:
             response.close()
@@ -377,13 +377,13 @@ def validate_hgnc(row_i: int, hgnc: str) -> None:
         response = requests.get(hgnc_url, headers={"Accept": "application/json"}, verify=False)
         response_json: dict = response.json()
         if 'response' not in response_json or 'numFound' not in response_json['response']:
-            abort(json_error(f"TSV file row# {row_i}: Problem encountered validating HGNC '{hgnc}'", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating HGNC '{hgnc}'", 406))
         num_found: int = response_json['response']['numFound']
         if response.status_code != 200 or num_found <= 0:
-            abort(json_error(f"TSV file row# {row_i}: HGNC '{hgnc}' is not found in catalogue", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: HGNC '{hgnc}' is not found in catalogue", 406))
     except requests.ConnectionError as error:
         # TODO: This should probably return a 502 and the frontend needs to be modified to handle it.
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered validating HGNC '{hgnc}'", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating HGNC '{hgnc}'", 406))
     finally:
         if response is not None:
             response.close()
@@ -392,7 +392,7 @@ def validate_hgnc(row_i: int, hgnc: str) -> None:
 def validate_uberon_id(row_i: int, ontology_id: str) -> None:
     required_prefix: str = "UBERON:"
     if ontology_id[0:len(required_prefix)] != required_prefix:
-        abort(json_error(f"TSV file row# {row_i}: UBERON Ontoloty ID "
+        abort(json_error(f"TSV file row number `{row_i}`: UBERON Ontoloty ID "
                          f"'{ontology_id}' must begin with '{required_prefix}'", 406))
     validate_ontology(row_i, ontology_id)
 
@@ -414,10 +414,10 @@ def validate_ontology(row_i: int, ontology_id: str) -> None:
         logger.debug(f'validate_ontology() URL: {ols_url}')
         response = requests.get(ols_url, headers={"Accept": "application/json"}, verify=False, allow_redirects=True)
         if response.status_code != 200:
-            abort(json_error(f"TSV file row# {row_i}: Ontology ID '{ontology_id}' is not found", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: Ontology ID '{ontology_id}' is not found", 406))
     except requests.ConnectionError as error:
         # TODO: This should probably return a 502 and the frontend needs to be modified to handle it.
-        abort(json_error(f"TSV file row# {row_i}: Problem encountered validating ontology_id '{ontology_id}'", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: Problem encountered validating ontology_id '{ontology_id}'", 406))
     finally:
         if response is not None:
             response.close()
@@ -444,7 +444,7 @@ def validate_antibodytsv_row(row_i: int, row: dict, request_files: dict, ubkg_ap
                 pdf_file_size_mb: float = len(pdf_file_content)/(1024.0*1000.0)
                 max_ingest_file_upload_size_mb: float = 10.0
                 if pdf_file_size_mb >= max_ingest_file_upload_size_mb:
-                    abort(json_error(f"TSV file row# {row_i}: avr_pdf_filename '{row['avr_pdf_filename']}'"
+                    abort(json_error(f"TSV file row number `{row_i}`: avr_pdf_filename '{row['avr_pdf_filename']}'"
                                      f" is over maximum file size of {max_ingest_file_upload_size_mb}MB", 406))
                 avr_pdf_file.stream.seek(0)
                 logger.debug("validate_antibodytsv_row: avr_pdf_file.filename:"
@@ -457,12 +457,12 @@ def validate_antibodytsv_row(row_i: int, row: dict, request_files: dict, ubkg_ap
                     found_pdf = avr_pdf_file.filename
                     break
                 except PdfReadError:
-                    abort(json_error(f"TSV file row# {row_i}: avr_pdf_filename '{row['avr_pdf_filename']}'"
+                    abort(json_error(f"TSV file row number `{row_i}`: avr_pdf_filename '{row['avr_pdf_filename']}'"
                                      " found, but not a valid PDF file", 406))
         if found_pdf is None:
-            abort(json_error(f"TSV file row# {row_i}: avr_pdf_filename '{row['avr_pdf_filename']}' is not found", 406))
+            abort(json_error(f"TSV file row number `{row_i}`: avr_pdf_filename '{row['avr_pdf_filename']}' is not found", 406))
     else:
-        abort(json_error(f"TSV file row# {row_i}: avr_pdf_filename '{row['avr_pdf_filename']}' is not found", 406))
+        abort(json_error(f"TSV file row number `{row_i}`: avr_pdf_filename '{row['avr_pdf_filename']}' is not found", 406))
 
     validate_previous_version_id(row_i, row['previous_version_id'], cur)
     # All of these make callouts to other RestAPIs...
@@ -565,12 +565,12 @@ def validate_antibodytsv(request_files: dict, ubkg_api_url: str):
                         row_i = row_i + 1
                         found_pdf, target_data = validate_antibodytsv_row(row_i, row, request_files, ubkg_api_url, cur)
                         if found_pdf is not None:
-                            logger.debug(f"validate_antibodytsv: TSV file row# {row_i}:"
+                            logger.debug(f"validate_antibodytsv: TSV file row number `{row_i}`:"
                                         f" found PDF file '{found_pdf}' as valid PDF")
                             pdf_files_processed.append(found_pdf)
                         target_datas |= target_data
                         # else:
-                        #     logger.debug(f"validate_antibodytsv: TSV file row# {row_i}: valid PDF not found")
+                        #     logger.debug(f"validate_antibodytsv: TSV file row number `{row_i}`: valid PDF not found")
     logger.debug(f"validate_antibodytsv: found valid PDF files ({len(pdf_files_processed)}): '{pdf_files_processed}'")
     logger.debug(f"validate_antibodytsv: found target_datas ({len(target_datas)}): '{target_datas}'")
     logger.debug(f"validate_antibodytsv: run time: {datetime.timedelta(seconds=time.time() - start_time)}")
