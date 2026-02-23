@@ -1,6 +1,7 @@
 import csv
 import os
 import json
+import requests
 from flask import (
     abort, Blueprint, current_app, jsonify, make_response,
     redirect, request, session, url_for, render_template
@@ -44,18 +45,6 @@ def import_antibodies(): # pylint: disable=too-many-branches
     if not session.get('is_authenticated'):
         return redirect(url_for('login'))
     
-    allowable_consortiums_str: str = current_app.config['ALLOWABLE_CONSORTIUMS']
-    if allowable_consortiums_str is None:
-       logger.info("Invalid key ALLOWABLE_CONSORTIUMS")
-       abort(json_error('Server configuration error for allowable consortiums.', 500)) 
-
-    allowable_consortiums_dict = {}
-    try:
-        allowable_consortiums_dict = json.loads(allowable_consortiums_str) 
-        allowable_consortiums_keys = list(allowable_consortiums_dict.keys())
-        allowable_consortiums_values = list(allowable_consortiums_dict.values())
-    except Exception as e:
-        abort(json_error(str(e), 500))
 
     if not session.get('is_authorized'):
         logger.info("User is not authorized.")
@@ -113,16 +102,20 @@ def import_antibodies(): # pylint: disable=too-many-branches
                         vendor_name: str = row['vendor']
                         del row['vendor']
 
-                        # validate the consortium
-                        if 'consortium' not in row:
-                            raise ValueError('TSV Header Error: Missing `consortium` header field.')
-                        row_consortium = row['consortium']
-             
-                        if row_consortium is None or row_consortium == '' or (row_consortium.lower() not in allowable_consortiums_keys):
-                            raise ValueError(f"TSV file row# {row_i}: Invalid `consortium` value. Allowable {', '.join(allowable_consortiums_values)}")
-                      
-                        # normalize row spelling
-                        row['consortium'] = allowable_consortiums_dict[row_consortium.lower()]
+                        if 'cell_type' in row:
+                            cell_type = row['cell_type'].upper()
+                            cell_type_err = f"TSV file row# {row_i}: Problem processing `cell_type` field with value {cell_type}"
+                            try:
+                                cell_type_url = f"{app.config['UBKG_API_URL']}/celltypes/{cell_type.replace('CL:', '')}" 
+                                response = requests.get(
+                                    cell_type_url
+                                )
+                                if not response.ok:
+                                    raise ValueError(f"{cell_type_err}. Invalid cell type.") 
+                             
+                                
+                            except Exception as http_e:
+                               raise ValueError(f"{cell_type_err}. {http_e}") 
 
                         # The .tsv file contains a 'target_symbol' field that is (possibly) resolved into a different
                         # 'target_symbol' by the UBKG lookup during validation. Here, whatever the user entered is
