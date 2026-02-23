@@ -111,11 +111,11 @@ def import_antibodies(): # pylint: disable=too-many-branches
                                     cell_type_url
                                 )
                                 if not response.ok:
-                                    raise ValueError(f"{cell_type_err}. Invalid cell type.") 
+                                    raise ValueError(f". Invalid cell type.") 
                              
                                 
                             except Exception as http_e:
-                               raise ValueError(f"{cell_type_err}. {http_e}") 
+                               raise ValueError(f". {http_e}") 
 
                         # The .tsv file contains a 'target_symbol' field that is (possibly) resolved into a different
                         # 'target_symbol' by the UBKG lookup during validation. Here, whatever the user entered is
