@@ -163,7 +163,7 @@ function AJAXSubmit (oFormElement) {
 }
 
 function backticksToCode(msg) {
-  return msg.replace(/`([^`]*)`/g, '<code>$1</code>')
+  return msg.replace(/`([^`]*)`/g, '<code>$1</code>').split('\n').join('<br />')
 }
 
 function ajaxSuccess (event) {
@@ -218,7 +218,7 @@ function ajaxSuccess (event) {
       }
       cssClassErr = jsonresponse.pdf_files_not_processed.length > 0 ? 'alert-warning' : 'alert-success'
       retryBtnText = 'Upload More'
-  } else if (http_status == 406) {
+  } else if (http_status == 406 || http_status == 400) {
       responsetable += '<div>';
       responsetable += '<p><b>Error</b></p>';
       responsetable += '<p>' + backticksToCode(jsonresponse.message) + '</p>';
@@ -227,7 +227,7 @@ function ajaxSuccess (event) {
   } else {
       responsetable += '<div>';
       responsetable += '<p><b>Unexpected Error</b></p>';
-      responsetable += '<p>Received from the server: ' + backticksToCode(jsonresponse.message).split('\n').join('<br />') + '</p><p>HTTP Status: <code>' + http_status + '</code></p>';
+      responsetable += '<p>Received from the server: ' + backticksToCode(jsonresponse.message) + '</p><p>HTTP Status: <code>' + http_status + '</code></p>';
       responsetable += '</div>';
       responsetable += '<br>';
   }
