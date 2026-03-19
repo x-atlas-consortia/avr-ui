@@ -40,7 +40,8 @@ VALID_COLUMNS: list = [
     'organ', 'method', 'author_orcids', 'hgnc_id', 'isotype', 'concentration_value', 'dilution_factor', 'conjugate',
     'tissue_preservation', 'cycle_number', 'fluorescent_reporter', 'manuscript_doi', 'vendor_affiliation',
     'organ_uberon_id', 'antigen_retrieval', 'omap_id', 'created_timestamp', 'created_by_user_displayname',
-    'created_by_user_email', 'created_by_user_sub', 'group_uuid', 'antibody_hubmap_id'
+    'created_by_user_email', 'created_by_user_sub', 'group_uuid', 'antibody_hubmap_id',
+    'senescence_specific', 'cell_marker', 'segmentation_cell_membrane', 'taxon', 'recommended'
 ]
 VENDORS_TABLE: str = 'public.vendors'
 ANTIBODIES_TABLE: str = 'public.antibodies'

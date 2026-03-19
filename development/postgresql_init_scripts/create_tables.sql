@@ -59,6 +59,11 @@ CREATE TABLE IF NOT EXISTS "public"."antibodies" (
     "created_by_user_sub" text NOT NULL,
 
     "antibody_hubmap_id" text NOT NULL,
+    "senescence_specific" text NOT NULL,
+    "cell_marker" text NOT NULL,
+    "segmentation_cell_membrane" text NOT NULL,
+    "taxon" text NOT NULL,
+    "recommended" text NOT NULL,
     PRIMARY KEY ("id")
 );
 

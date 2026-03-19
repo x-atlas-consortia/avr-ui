@@ -14,14 +14,14 @@ class AntibodyHitsTable extends React.Component {
         if (i > 0) {
           cs += ', ';
         }
-        cs += `<div class="text-truncate"><a href="${url_prefix}${data}${url_suffix}" target="_blank">${data}</a></div>`;
+        cs += `<div class="text-truncate"><a href="${url_prefix}${data}${url_suffix}" target="_blank">${data} <i class="bi bi-box-arrow-up-right"></i></a></div>`;
       }
       return cs;
     }
 
     function a_href_omap_id(omap_id) {
       if (omap_id in omap_id_linkage) {
-        return `<div class="text-truncate"><a href="${omap_id_linkage[omap_id]}" target="_blank">${omap_id}</a></div>`;
+        return `<div class="text-truncate"><a href="${omap_id_linkage[omap_id]}" target="_blank">${omap_id} <i class="bi bi-box-arrow-up-right"></i></a></div>`;
       } else {
         return `<div class="text-truncate">${omap_id}</div>`;
       }
@@ -54,10 +54,9 @@ class AntibodyHitsTable extends React.Component {
       antibodies += a_href_omap_id(hit._source.omap_id);
       antibodies += '</td>';
       antibodies += `<td class="antibody_hubmap_id_col">${hit._source.antibody_hubmap_id}</td>`;
-      antibodies += `<td class="consortium_col">${hit._source.consortium || 'HuBMAP'}</td>`;
 
       antibodies += '<td class="host_col" style="display:'+display.host+`;">${hit._source.host}</td>`;
-      antibodies += '<td class="rrid_col" style="display:'+display.rrid+`;"><a href="https://scicrunch.org/resolver/RRID:${hit._source.rrid}" target="_blank">${hit._source.rrid}</a></td>`;
+      antibodies += '<td class="rrid_col" style="display:'+display.rrid+`;"><a href="https://scicrunch.org/resolver/RRID:${hit._source.rrid}" target="_blank">${hit._source.rrid} <i class="bi bi-box-arrow-up-right"></i></a></td>`;
       antibodies += '<td class="catalog_number_col" style="display:'+display.catalog_number+`;">${hit._source.catalog_number}</td>`;
       antibodies += '<td class="lot_number_col" style="display:'+display.lot_number+`;">${hit._source.lot_number}</td>`;
       antibodies += '<td class="vendor_name_col" style="display:'+display.vendor_name+`;">${hit._source.vendor_name}</td>`;
@@ -77,7 +76,7 @@ class AntibodyHitsTable extends React.Component {
       antibodies += '<td class="fluorescent_reporter_col" style="display:'+display.fluorescent_reporter+`;">${hit._source.fluorescent_reporter}</td>`;
       antibodies += '<td class="manuscript_doi_col" style="display:'+display.manuscript_doi+';">' ;
       if (hit._source.manuscript_doi != '') {
-        antibodies += `<a href="https://doi.org/${hit._source.manuscript_doi}" target="_blank">${hit._source.manuscript_doi}</a>`;
+        antibodies += `<a href="https://doi.org/${hit._source.manuscript_doi}" target="_blank">${hit._source.manuscript_doi}<i class="bi bi-box-arrow-up-right"></i></a>`;
       }
       antibodies += '</td>';
       antibodies += '<td class="protocol_doi_col" style="display:'+display.protocol_doi+'">';
@@ -85,15 +84,20 @@ class AntibodyHitsTable extends React.Component {
       antibodies += '</td>';
       antibodies += '<td class="vendor_affiliation_col" style="display:'+display.vendor_affiliation+`;">${hit._source.vendor_affiliation}</td>`;
       organ_uberon_id_url_encode = hit._source.organ_uberon_id.replace(':','%3A');
-      antibodies += '<td class="organ_uberon_id_col" style="display:'+display.organ_uberon_id+`;"><a href="https://www.ebi.ac.uk/ols/search?q=${organ_uberon_id_url_encode}" target="_blank">${hit._source.organ_uberon_id}</a></td>`;
+      antibodies += '<td class="organ_uberon_id_col" style="display:'+display.organ_uberon_id+`;"><a href="https://www.ebi.ac.uk/ols/search?q=${organ_uberon_id_url_encode}" target="_blank">${hit._source.organ_uberon_id} <i class="bi bi-box-arrow-up-right"></i></a></td>`;
       antibodies += '<td class="antigen_retrieval_col" style="display:'+display.antigen_retrieval+`;">${hit._source.antigen_retrieval}</td>`;
-      antibodies += '<td class="created_by_user_email_col" style="display:'+display.created_by_user_email+`;"><a href="mailto:${hit._source.created_by_user_email}" target="_blank">${hit._source.created_by_user_email}</a></td>`;
+      antibodies += '<td class="created_by_user_email_col" style="display:'+display.created_by_user_email+`;"><a href="mailto:${hit._source.created_by_user_email}" target="_blank">${hit._source.created_by_user_email} <i class="bi bi-box-arrow-up-right"></i></a></td>`;
       antibodies += '<td class="previous_version_id_col">';
       if (hit._source.previous_version_pdf_filename != undefined) {
         const uuidNoHyphens = hit._source.previous_version_pdf_uuid.replaceAll("-", "");
         antibodies += `<a href="${assets_url}/${uuidNoHyphens}/${hit._source.previous_version_pdf_filename}" target="_blank">${hit._source.previous_version_id}</a>`;
       }
       antibodies += '</td>';
+      antibodies += '<td class="senescence_specific_col" style="display:'+display.senescence_specific+`;">${hit._source.senescence_specific || ''}</td>`;
+      antibodies += '<td class="cell_marker_col" style="display:'+display.cell_marker+`;">${hit._source.cell_marker ? `<a target="_blank" href="http://purl.obolibrary.org/obo/${hit._source.cell_marker.replace(':', '_')}">${hit._source.cell_marker} <i class="bi bi-box-arrow-up-right"></i></a>` : ''}</td>`;
+      antibodies += '<td class="segmentation_cell_membrane_col" style="display:'+display.segmentation_cell_membrane+`;">${hit._source.segmentation_cell_membrane || ''}</td>`;
+      antibodies += '<td class="taxon_col" style="display:'+display.taxon+`;">${hit._source.taxon || ''}</td>`;
+      antibodies += '<td class="recommended_col" style="display:'+display.recommended+`;">${hit._source.recommended || ''}</td>`;
       antibodies += `</tr>`;
     }
     return (
@@ -110,7 +114,6 @@ class AntibodyHitsTable extends React.Component {
               <th id="avr_pdf_filename_col_head">Validation Report</th>
               <th id="omap_id_col_head">OMAP ID</th>
               <th id="antibody_hubmap_id_col_head">AVR ID</th>
-              <th id="consortium_col_head">Consortium</th>
               <th id="host_col_head" style={{"display": display.host}}>Host</th>
               <th id="rrid_col_head" style={{"display": display.rrid}}>RRID</th>
               <th id="catalog_number_col_head" style={{"display": display.catalog_number}}>Catalog#</th>
@@ -133,6 +136,11 @@ class AntibodyHitsTable extends React.Component {
               <th id="antigen_retrieval_col_head" style={{"display": display.antigen_retrieval}}>Antigen Retrieval</th>
               <th id="created_by_user_email_col_head" style={{"display": display.created_by_user_email}}>Submitter Email</th>
               <th id="previous_version_id_col_head" style={{"display": display.previous_version_id}}>Previous Revision ID</th>
+              <th id="senescence_specific_col_head" style={{"display": display.senescence_specific}}>Senescence Specific</th>
+              <th id="cell_marker_col_head" style={{"display": display.cell_marker}}>Cell Marker</th>
+              <th id="segmentation_cell_membrane_col_head" style={{"display": display.segmentation_cell_membrane}}>Segmentation/Cell Membrane</th>
+              <th id="taxon_col_head" style={{"display": display.taxon}}>Taxon</th>
+              <th id="recommended_col_head" style={{"display": display.recommended}}>Recommended</th>
             </tr>
           </thead>
           <tbody dangerouslySetInnerHTML={{__html: antibodies}}/>

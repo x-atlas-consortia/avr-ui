@@ -66,9 +66,17 @@ class SI(IntEnum):
     NEXT_VERSION_ID = 37
     PREVIOUS_VERSION_PDF_UUID = 38
     PREVIOUS_VERSION_PDF_FILENAME = 39
+    SENESCENCE_SPECIFIC = 40 
+    CELL_MARKER = 41
+    SEGMENTATION_CELL_MEMBRANE = 42
+    TAXON = 43
+    RECOMMENDED = 44
 
 
 # THESE MUST MATCH THE ORDER IN THE ""SI"" CLASS!!!
+# TODO figure out:
+## a.senescence_specific, a.cell_marker, 
+## a.segmentation_cell_membrane, a.taxon, a.recommended
 QUERY = '''
 SELECT
     a.antibody_uuid,
@@ -87,7 +95,9 @@ SELECT
     a.created_by_user_sub, a.group_uuid,
     a.clone_id,
     a.antibody_hubmap_id, a.previous_version_id, a.next_version_id,
-    a.previous_version_pdf_uuid, a.previous_version_pdf_filename, a.next_version_id
+    a.previous_version_pdf_uuid, a.previous_version_pdf_filename,
+    a.senescence_specific, a.cell_marker, 
+    a.segmentation_cell_membrane, a.taxon, a.recommended
 FROM antibodies a
 JOIN vendors v ON a.vendor_id = v.id
 '''
@@ -136,7 +146,12 @@ def base_antibody_query_result_to_json(antibody) -> dict:
         'previous_version_id': antibody[SI.PREVIOUS_VERSION_ID],
         'next_version_id': antibody[SI.NEXT_VERSION_ID],
         'previous_version_pdf_uuid': antibody[SI.PREVIOUS_VERSION_PDF_UUID],
-        'previous_version_pdf_filename': antibody[SI.PREVIOUS_VERSION_PDF_FILENAME]
+        'previous_version_pdf_filename': antibody[SI.PREVIOUS_VERSION_PDF_FILENAME],
+        'senescence_specific': antibody[SI.SENESCENCE_SPECIFIC], 
+        'cell_marker': antibody[SI.CELL_MARKER], 
+        'segmentation_cell_membrane': antibody[SI.SEGMENTATION_CELL_MEMBRANE], 
+        'taxon': antibody[SI.TAXON], 
+        'recommended': antibody[SI.RECOMMENDED] 
     }
     if antibody[SI.AVR_PDF_UUID] is not None:
         ant['avr_pdf_uuid'] = antibody[SI.AVR_PDF_UUID].replace('-', '')
@@ -340,7 +355,8 @@ INSERT INTO antibodies (
     created_timestamp,
     created_by_user_displayname, created_by_user_email,
     created_by_user_sub, group_uuid,
-    previous_version_id, antibody_hubmap_id, previous_version_pdf_uuid, previous_version_pdf_filename
+    previous_version_id, antibody_hubmap_id, previous_version_pdf_uuid, previous_version_pdf_filename,
+    senescence_specific, cell_marker, segmentation_cell_membrane, taxon, recommended 
 ) 
 VALUES (
     %(antibody_uuid)s,
@@ -356,7 +372,8 @@ VALUES (
     EXTRACT(epoch FROM NOW()),
     %(created_by_user_displayname)s, %(created_by_user_email)s,
     %(created_by_user_sub)s, %(group_uuid)s,
-    %(previous_version_id)s, %(antibody_hubmap_id)s, %(previous_version_pdf_uuid)s, %(previous_version_pdf_filename)s
+    %(previous_version_id)s, %(antibody_hubmap_id)s, %(previous_version_pdf_uuid)s, %(previous_version_pdf_filename)s,
+    %(senescence_specific)s, %(cell_marker)s, %(segmentation_cell_membrane)s, %(taxon)s, %(recommended)s
 ) RETURNING id
 '''
 
@@ -378,7 +395,8 @@ INSERT INTO antibodies (
     created_timestamp,
     created_by_user_displayname, created_by_user_email,
     created_by_user_sub, group_uuid,
-    previous_version_id, antibody_hubmap_id, previous_version_pdf_uuid, previous_version_pdf_filename
+    previous_version_id, antibody_hubmap_id, previous_version_pdf_uuid, previous_version_pdf_filename,
+    senescence_specific, cell_marker, segmentation_cell_membrane, taxon, recommended 
 ) 
 VALUES (
     %(antibody_uuid)s,
@@ -395,7 +413,8 @@ VALUES (
     EXTRACT(epoch FROM NOW()),
     %(created_by_user_displayname)s, %(created_by_user_email)s,
     %(created_by_user_sub)s, %(group_uuid)s,
-    %(previous_version_id)s, %(antibody_hubmap_id)s, %(previous_version_pdf_uuid)s, %(previous_version_pdf_filename)s
+    %(previous_version_id)s, %(antibody_hubmap_id)s, %(previous_version_pdf_uuid)s, %(previous_version_pdf_filename)s,
+    %(senescence_specific)s, %(cell_marker)s, %(segmentation_cell_membrane)s, %(taxon)s, %(recommended)s
 ) RETURNING id
 '''
 

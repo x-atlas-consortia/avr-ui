@@ -55,7 +55,12 @@ def index_antibody(antibody: dict):
         'previous_version_id': antibody['previous_version_id'],
         'next_version_id': antibody['next_version_id'],
         'previous_version_pdf_uuid': antibody['previous_version_pdf_uuid'],
-        'previous_version_pdf_filename': antibody['previous_version_pdf_filename']
+        'previous_version_pdf_filename': antibody['previous_version_pdf_filename'],
+        'senescence_specific': antibody['senescence_specific'], 
+        'cell_marker': antibody['cell_marker'], 
+        'segmentation_cell_membrane': antibody['segmentation_cell_membrane'], 
+        'taxon': antibody['taxon'], 
+        'recommended': antibody['recommended'] 
     }
     if 'avr_pdf_uuid' in antibody and 'avr_pdf_filename' in antibody and antibody['avr_pdf_filename'] != '':
         doc['avr_pdf_uuid'] = antibody['avr_pdf_uuid']

@@ -257,6 +257,7 @@ body{
 }
 .sk-layout__body a{
   color: rgb(42, 111, 184);
+  text-decoration: none;
 }
 .sk-layout__body button{
   background-color: rgb(68, 74, 101);
