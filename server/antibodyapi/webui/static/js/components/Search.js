@@ -8,6 +8,7 @@ import AntibodyHitsTable from './AntibodyHitsTable';
 import { AdditionalColumns } from './AdditionalColumns';
 import DownloadFile from './DownloadFile';
 import AppNavBar from './AppNavBar';
+import RefinementOption from './RefinementOption'
 import Button from 'react-bootstrap/Button';
 import { useCookies } from 'react-cookie';
 import CookieConsent from 'react-cookie-consent';
@@ -146,6 +147,25 @@ function Search(props) {
           containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
         />
         <RefinementListFilter
+          id="cell_marker"
+          title="Cell Marker"
+          field="cell_marker.keyword"
+          operator="OR"
+          searchable={true}
+          size={10} limit={10}
+          itemComponent={RefinementOption}
+          containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+        />
+        <RefinementListFilter
+          id="taxon"
+          title="Taxon"
+          field="taxon.keyword"
+          operator="OR"
+          searchable={true}
+          size={10} limit={10}
+          containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+        />
+        <RefinementListFilter
           id="recombinant"
           title="Recombinant"
           field="recombinant.keyword"
@@ -167,6 +187,15 @@ function Search(props) {
           id="tissue_preservation"
           title="Tissue Preservation"
           field="tissue_preservation.keyword"
+          operator="OR"
+          searchable={true}
+          size={10} limit={10}
+          containerComponent={<Panel collapsable={true} defaultCollapsed={true}/>}
+        />
+         <RefinementListFilter
+          id="recommended"
+          title="Recommended"
+          field="recommended.keyword"
           operator="OR"
           searchable={true}
           size={10} limit={10}

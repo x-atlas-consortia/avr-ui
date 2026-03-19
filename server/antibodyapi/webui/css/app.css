@@ -272,6 +272,10 @@ body{
   /* margin-bottom: 20px; */
 }
 
+.sk-item-list-option input.sk-item-list-option__checkbox {
+  margin-top: 0 !important;
+}
+
 .sk-layout__body .sk-layout__filters {
   margin: 0;
 }
@@ -421,6 +425,8 @@ body{
   text-align: left;
   padding: 16px;
   color: rgba(0, 0, 0, 0.87);
+  width: fit-content;
+  white-space: nowrap;
 }
 #antibody-results-table td{
   font-weight: 300;
@@ -436,8 +442,9 @@ body{
   text-align: left;
   padding: 16px;
   color: rgba(0, 0, 0, 0.87);
-  min-width: 190px;
-  max-width: 250px;
+
+  min-width: 150px;
+  max-width: 250px; 
 }
 
 div.panel{

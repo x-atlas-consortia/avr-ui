@@ -137,8 +137,8 @@ class AntibodyHitsTable extends React.Component {
               <th id="created_by_user_email_col_head" style={{"display": display.created_by_user_email}}>Submitter Email</th>
               <th id="previous_version_id_col_head" style={{"display": display.previous_version_id}}>Previous Revision ID</th>
               <th id="senescence_specific_col_head" style={{"display": display.senescence_specific}}>Senescence Specific</th>
-              <th id="cell_marker_col_head" style={{"display": display.cell_marker}}>Cell Marker</th>
-              <th id="segmentation_cell_membrane_col_head" style={{"display": display.segmentation_cell_membrane}}>Segmentation/Cell Membrane</th>
+              <th id="cell_marker_col_head" style={{"display": display.cell_marker, minWidth: '100px', maxWidth: '100px'}}>Cell Marker</th>
+              <th id="segmentation_cell_membrane_col_head" style={{"display": display.segmentation_cell_membrane}}><span className='text-truncate' style={{maxWidth: '200px', display: 'block'}} title="Segmentation/Cell Membrane">Segmentation/Cell Membrane</span></th>
               <th id="taxon_col_head" style={{"display": display.taxon}}>Taxon</th>
               <th id="recommended_col_head" style={{"display": display.recommended}}>Recommended</th>
             </tr>
