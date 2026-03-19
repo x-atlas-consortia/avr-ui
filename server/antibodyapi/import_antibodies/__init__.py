@@ -102,16 +102,16 @@ def import_antibodies(): # pylint: disable=too-many-branches
                         vendor_name: str = row['vendor']
                         del row['vendor']
 
-                        if 'cell_type' in row:
-                            cell_type = row['cell_type'].upper()
-                            cell_type_err = f"TSV file row number `{row_i}`: Problem processing `cell_type` field with value `{cell_type}`"
+                        if 'cell_marker' in row:
+                            cell_marker = row['cell_marker'].upper()
+                            cell_marker_err = f"TSV file row number `{row_i}`: Problem processing `cell_marker` field with value `{cell_marker}`"
                             try:
-                                cell_type_url = f"{app.config['UBKG_API_URL']}/celltypes/{cell_type.replace('CL:', '')}" 
+                                cell_marker_url = f"{app.config['UBKG_API_URL']}/celltypes/{cell_marker.replace('CL:', '')}" 
                                 response = requests.get(
-                                    cell_type_url
+                                    cell_marker_url
                                 )
                                 if not response.ok:
-                                    raise ValueError(f"{cell_type_err}. Invalid cell type.\nPlease refer to the cell types ontology for a list of valid cell types and associated codes. {app.config['UBKG_CELL_TYPES_ONTOLOGY_URL']}") 
+                                    raise ValueError(f"{cell_marker_err}. Invalid cell type.\nPlease refer to the cell types ontology for a list of valid cell types and associated codes. {app.config['UBKG_CELL_TYPES_ONTOLOGY_URL']}") 
                             except Exception as http_e:
                                raise ValueError(f"{http_e}") 
 
