@@ -1,10 +1,11 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
+import DataTable from 'react-data-table-component'
 
 class AntibodyHitsTable extends React.Component {
 
   render(){
     const { hits } = this.props;
+    const linkOutIcon = <i className="bi bi-box-arrow-up-right"></i>
 
     function a_hrefs(url_prefix, url_suffix, data_s) {
       let cs = '';
@@ -21,130 +22,130 @@ class AntibodyHitsTable extends React.Component {
 
     function a_href_omap_id(omap_id) {
       if (omap_id in omap_id_linkage) {
-        return `<div class="text-truncate"><a href="${omap_id_linkage[omap_id]}" target="_blank">${omap_id} <i class="bi bi-box-arrow-up-right"></i></a></div>`;
+        return <div class="text-truncate"><a href={omap_id_linkage[omap_id]} target="_blank">{omap_id} {linkOutIcon}</a></div>
       } else {
-        return `<div class="text-truncate">${omap_id}</div>`;
+        return <div class="text-truncate">{omap_id}</div>;
       }
     }
 
-    //console.info('display: ', display);
-    //console.info('assets_url: ', assets_url);
-    var antibodies = '';
-    var organ_uberon_id_url_encode = '';
-    for (var i = 0; i < hits.length; i++) {
-      var hit = hits[i];
-      Object.keys(hit._source).forEach((i) => {if (hit._source[i] == null) hit._source[i] = '';})
-      antibodies += `<tr key=${hit._id}>`;
-      antibodies += '<td class="target_symbol_col">';
-      antibodies += a_hrefs('https://www.uniprot.org/uniprotkb?query=(protein_name:%22', '%22)', hit._source.target_symbol);
-      antibodies += '</td>';
-      antibodies += '<td class="uniprot_accession_number_col">';
-      antibodies += a_hrefs('https://www.uniprot.org/uniprot/', '#section_general', hit._source.uniprot_accession_number);
-      antibodies += '</td>';
-      antibodies += `<td class="clonality_col">${hit._source.clonality}</td>`;
-      antibodies += '<td class="clone_id_col" style="display:'+display.clone_id+`;">${hit._source.clone_id}</td>`;
-      antibodies += `<td class="method_col">${hit._source.method}</td>`;
-      antibodies += `<td class="tissue_preservation_col">${hit._source.tissue_preservation}</td>`;
-      antibodies += '<td class="avr_pdf_filename_col">';
-      if (hit._source.avr_pdf_filename != undefined) {
-        antibodies += `<div class="text-truncate"><a title="${hit._source.avr_pdf_filename}" href="${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}" target="_blank">${hit._source.avr_pdf_filename}</a></div>`;
-      }
-      antibodies += '</td>';
-      antibodies += '<td class="omap_id_col">';
-      antibodies += a_href_omap_id(hit._source.omap_id);
-      antibodies += '</td>';
-      antibodies += `<td class="antibody_hubmap_id_col">${hit._source.antibody_hubmap_id}</td>`;
-
-      antibodies += '<td class="host_col" style="display:'+display.host+`;">${hit._source.host}</td>`;
-      antibodies += '<td class="rrid_col" style="display:'+display.rrid+`;"><a href="https://scicrunch.org/resolver/RRID:${hit._source.rrid}" target="_blank">${hit._source.rrid} <i class="bi bi-box-arrow-up-right"></i></a></td>`;
-      antibodies += '<td class="catalog_number_col" style="display:'+display.catalog_number+`;">${hit._source.catalog_number}</td>`;
-      antibodies += '<td class="lot_number_col" style="display:'+display.lot_number+`;">${hit._source.lot_number}</td>`;
-      antibodies += '<td class="vendor_name_col" style="display:'+display.vendor_name+`;">${hit._source.vendor_name}</td>`;
-      antibodies += '<td class="recombinant_col" style="display:'+display.recombinant+`;">${hit._source.recombinant}</td>`;
-      antibodies += '<td class="organ_col" style="display:'+display.organ+`;">${hit._source.organ}</td>`;
-      antibodies += '<td class="author_orcids_col" style="display:'+display.author_orcids+';">';
-      antibodies += a_hrefs('https://orcid.org/', '', hit._source.author_orcids);
-      antibodies += '</td>';
-      antibodies += '<td class="hgnc_id_col" style="display:'+display.hgnc_id+'">';
-      antibodies += a_hrefs('https://www.genenames.org/tools/search/#!/?query=', '', hit._source.hgnc_id);
-      antibodies += '</td>';
-      antibodies += '<td class="isotype_col" style="display:'+display.isotype+`;">${hit._source.isotype}</td>`;
-      antibodies += '<td class="concentration_value_col" style="display:'+display.concentration_value+`;">${hit._source.concentration_value}</td>`;
-      antibodies += '<td class="dilution_factor_col" style="display:'+display.dilution_factor+`;">${hit._source.dilution_factor}</td>`;
-      antibodies += '<td class="conjugate_col" style="display:'+display.conjugate+`;">${hit._source.conjugate}</td>`;
-      antibodies += '<td class="cycle_number_col" style="display:'+display.cycle_number+`;">${hit._source.cycle_number}</td>`;
-      antibodies += '<td class="fluorescent_reporter_col" style="display:'+display.fluorescent_reporter+`;">${hit._source.fluorescent_reporter}</td>`;
-      antibodies += '<td class="manuscript_doi_col" style="display:'+display.manuscript_doi+';">' ;
-      if (hit._source.manuscript_doi != '') {
-        antibodies += `<a href="https://doi.org/${hit._source.manuscript_doi}" target="_blank">${hit._source.manuscript_doi}<i class="bi bi-box-arrow-up-right"></i></a>`;
-      }
-      antibodies += '</td>';
-      antibodies += '<td class="protocol_doi_col" style="display:'+display.protocol_doi+'">';
-      antibodies += a_hrefs('https://doi.org/', '', hit._source.protocol_doi);
-      antibodies += '</td>';
-      antibodies += '<td class="vendor_affiliation_col" style="display:'+display.vendor_affiliation+`;">${hit._source.vendor_affiliation}</td>`;
-      organ_uberon_id_url_encode = hit._source.organ_uberon_id.replace(':','%3A');
-      antibodies += '<td class="organ_uberon_id_col" style="display:'+display.organ_uberon_id+`;"><a href="https://www.ebi.ac.uk/ols/search?q=${organ_uberon_id_url_encode}" target="_blank">${hit._source.organ_uberon_id} <i class="bi bi-box-arrow-up-right"></i></a></td>`;
-      antibodies += '<td class="antigen_retrieval_col" style="display:'+display.antigen_retrieval+`;">${hit._source.antigen_retrieval}</td>`;
-      antibodies += '<td class="created_by_user_email_col" style="display:'+display.created_by_user_email+`;"><a href="mailto:${hit._source.created_by_user_email}" target="_blank">${hit._source.created_by_user_email} <i class="bi bi-box-arrow-up-right"></i></a></td>`;
-      antibodies += '<td class="previous_version_id_col">';
-      if (hit._source.previous_version_pdf_filename != undefined) {
-        const uuidNoHyphens = hit._source.previous_version_pdf_uuid.replaceAll("-", "");
-        antibodies += `<a href="${assets_url}/${uuidNoHyphens}/${hit._source.previous_version_pdf_filename}" target="_blank">${hit._source.previous_version_id}</a>`;
-      }
-      antibodies += '</td>';
-      antibodies += '<td class="senescence_specific_col" style="display:'+display.senescence_specific+`;">${hit._source.senescence_specific || ''}</td>`;
-      antibodies += '<td class="cell_marker_col" style="display:'+display.cell_marker+`;">${hit._source.cell_marker ? `<a target="_blank" href="http://purl.obolibrary.org/obo/${hit._source.cell_marker.replace(':', '_')}">${hit._source.cell_marker} <i class="bi bi-box-arrow-up-right"></i></a>` : ''}</td>`;
-      antibodies += '<td class="segmentation_cell_membrane_col" style="display:'+display.segmentation_cell_membrane+`;">${hit._source.segmentation_cell_membrane || ''}</td>`;
-      antibodies += '<td class="taxon_col" style="display:'+display.taxon+`;">${hit._source.taxon || ''}</td>`;
-      antibodies += '<td class="recommended_col" style="display:'+display.recommended+`;">${hit._source.recommended || ''}</td>`;
-      antibodies += `</tr>`;
+    function titleCase(str) {
+      return str.replace(
+            /\w\S*/g,
+            text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+        )
     }
+
+    function fieldFormat(hit, f) {
+
+      if (f === 'target_symbol') {
+        return a_hrefs('https://www.uniprot.org/uniprotkb?query=(protein_name:%22', '%22)', hit._source[f])
+      }
+
+      if (f === 'uniprot_accession_number') {
+        return a_hrefs('https://www.uniprot.org/uniprot/', '#section_general', hit._source.uniprot_accession_number)
+      }
+
+      if (f === 'avr_pdf_filename') {
+        if (hit._source.avr_pdf_filename === undefined) {
+          return <></>
+        }
+        return <div class="text-truncate"><a title={hit._source.avr_pdf_filename} href={`${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}`} target="_blank">{hit._source.avr_pdf_filename} {linkOutIcon}</a></div>
+      }
+
+      if (f === 'omap_id') {
+        return a_href_omap_id(hit._source.omap_id)
+      }
+
+      if (f === 'rrid') {
+        return <a href={`https://scicrunch.org/resolver/RRID:${hit._source.rrid}`} target="_blank">{hit._source.rrid} {linkOutIcon}</a>
+      }
+
+      if (f === 'manuscript_doi') {
+        if (hit._source.manuscript_doi != '') {
+          return <a href={`https://doi.org/${hit._source.manuscript_doi}`} target="_blank">{hit._source.manuscript_doi}{linkOutIcon}</a>
+        }
+        return <></>
+      }
+
+      if (f === 'organ_uberon_id') {
+        let organ_uberon_id_url_encode = hit._source.organ_uberon_id.replace(':', '%3A');
+        return <a href={`https://www.ebi.ac.uk/ols/search?q=${organ_uberon_id_url_encode}`} target="_blank">{hit._source.organ_uberon_id} {linkOutIcon}</a>
+      }
+
+      if (f === 'created_by_user_email') {
+        return <a href={`mailto:${hit._source.created_by_user_email}`} target="_blank">{hit._source.created_by_user_email} {linkOutIcon}</a>
+      }
+
+      if (f === 'previous_version_id') {
+        if (hit._source.previous_version_pdf_filename !== undefined) {
+          const uuidNoHyphens = hit._source.previous_version_pdf_uuid?.replaceAll("-", "");
+          return <a href={`${assets_url}/${uuidNoHyphens}/${hit._source.previous_version_pdf_filename}`} target="_blank">{hit._source.previous_version_id}</a>
+        }
+        return <></>
+      }
+
+      if (f === 'cell_marker') {
+        if (hit._source.cell_marker !== undefined) {
+          return <a target="_blank" href={`http://purl.obolibrary.org/obo/${hit._source.cell_marker.replace(':', '_')}`}>{hit._source.cell_marker} {linkOutIcon}</a>
+        }
+        return <></>
+      }
+
+      return <span>{hit._source[f]}</span>
+    }
+
+    function tableColumns() {
+      const fieldNames = {
+        uniprot_accession_number: 'UniProt#',
+        avr_pdf_filename: 'Validation Report',
+        clone_id: 'Clone ID',
+        omap_id: 'OMAP ID',
+        rrid: 'RRID',
+        catalog_number: 'Catalog#',
+        lot_number: 'Lot#',
+        author_orcids: 'Author ORCiDs',
+        hgnc_id: 'HGNC ID',
+        cycle_number: 'Cycle#',
+        manuscript_doi: 'Manuscript DOI',
+        protocol_doi: 'Protocol DOI',
+        organ_uberon_id: 'Organ UBERON ID',
+        created_by_user_email: 'Submitter Email',
+        previous_version_id: 'Previous Revision ID',
+        segmentation_cell_membrane: 'Segmentation/Cell Membrane'
+      }
+
+      const fields = ['target_symbol', 'uniprot_accession_number', 'clonality', 'clone_id', 'method', 'tissue_preservation', 'avr_pdf_filename', 'omap_id', 'antibody_hubmap_id', 
+        'host', 'rrid', 'catalog_number', 'lot_number', 'vendor_name', 'recombinant', 'organ', 'author_orcids', 'hgnc_id', 'isotype', 'concentration_value', 'dilution_factor', 
+        'conjugate', 'cycle_number', 'fluorescent_reporter', 'manuscript_doi', 'protocol_doi', 'vendor_affiliation', 'organ_uberon_id', 'antigen_retrieval', 'created_by_user_email', 
+        'previous_version_id', 'senescence_specific', 'cell_marker', 'segmentation_cell_membrane', 'taxon', 'recommended']
+
+      const columns = []
+      let col = {}
+      for (const f of fields) {
+        col = {
+          name: fieldNames[f] || titleCase(f?.replaceAll('_', ' ')),
+          id: f,
+          selector: row => row._source[f],
+          omit: display[f] ? display[f] !== 'table-cell' : undefined,
+          sortable: true,
+          reorder: true,
+          format: (hit) => {
+            return <>{fieldFormat(hit, f)}</>
+          }
+        }
+        if (['target_symbol', 'uniprot_accession_number', 'author_orcids', 'hgnc_id', 'protocol_doi'].indexOf(f) !== -1) {
+          col.format = (hit) => {
+            return <span dangerouslySetInnerHTML={{__html: fieldFormat(hit, f)}} ></span>
+          }
+        }
+        columns.push(col)
+      }
+      return columns
+    }
+
     return (
       <div className='sk-table__wrap'>
-        <Table striped bordered hover id="antibody-results-table" className="sk-table sk-table-striped" style={{width: '100%', boxSizing: 'border-box'}}>
-          <thead>
-            <tr>
-              <th id="target_symbol_col_head">Target Symbol</th>
-              <th id="uniprot_accession_col_head">UniProt#</th>
-              <th id="clonality_col_head">Clonality</th>
-              <th id="clone_id_col_head" style={{"display": display.clone_id}}>Clone ID</th>
-              <th id="method_col_head">Method</th>
-              <th id="tissue_preservation_col_head">Tissue Preservation</th>
-              <th id="avr_pdf_filename_col_head">Validation Report</th>
-              <th id="omap_id_col_head">OMAP ID</th>
-              <th id="antibody_hubmap_id_col_head">AVR ID</th>
-              <th id="host_col_head" style={{"display": display.host}}>Host</th>
-              <th id="rrid_col_head" style={{"display": display.rrid}}>RRID</th>
-              <th id="catalog_number_col_head" style={{"display": display.catalog_number}}>Catalog#</th>
-              <th id="lot_number_col_head" style={{"display": display.lot_number}}>Lot#</th>
-              <th id="vendor_name_col_head" style={{"display": display.vendor_name}}>Vendor</th>
-              <th id="recombinant_col_head" style={{"display": display.recombinant}}>Recombinant</th>
-              <th id="organ_col_head" style={{"display": display.organ}}>Organ</th>
-              <th id="author_orcids_col_head" style={{"display": display.author_orcids}}>Author ORCiDs</th>
-              <th id="hgnc_id_col_head" style={{"display": display.hgnc_id}}>HGNC ID</th>
-              <th id="isotype_col_head" style={{"display": display.isotype}}>Isotype</th>
-              <th id="concentration_value_col_head" style={{"display": display.concentration_value}}>Concentration</th>
-              <th id="dilution_factor_col_head" style={{"display": display.dilution_factor}}>Dilution Factor</th>
-              <th id="conjugate_col_head" style={{"display": display.conjugate}}>Conjugate</th>
-              <th id="cycle_number_col_head" style={{"display": display.cycle_number}}>Cycle#</th>
-              <th id="fluorescent_reporter_col_head" style={{"display": display.fluorescent_reporter}}>Fluorescent Reporter</th>
-              <th id="manuscript_doi_col_head" style={{"display": display.manuscript_doi}}>Manuscript DOI</th>
-              <th id="protocol_doi_col_head" style={{"display": display.protocol_doi}}>Protocol DOI</th>
-              <th id="vendor_affiliation_col_head" style={{"display": display.vendor_affiliation}}>Vendor Affiliation</th>
-              <th id="organ_uberon_id_col_head" style={{"display": display.organ_uberon_id}}>Organ UBERON ID</th>
-              <th id="antigen_retrieval_col_head" style={{"display": display.antigen_retrieval}}>Antigen Retrieval</th>
-              <th id="created_by_user_email_col_head" style={{"display": display.created_by_user_email}}>Submitter Email</th>
-              <th id="previous_version_id_col_head" style={{"display": display.previous_version_id}}>Previous Revision ID</th>
-              <th id="senescence_specific_col_head" style={{"display": display.senescence_specific}}>Senescence Specific</th>
-              <th id="cell_marker_col_head" style={{"display": display.cell_marker, minWidth: '100px', maxWidth: '100px'}}>Cell Marker</th>
-              <th id="segmentation_cell_membrane_col_head" style={{"display": display.segmentation_cell_membrane}}><span className='text-truncate' style={{maxWidth: '200px', display: 'block'}} title="Segmentation/Cell Membrane">Segmentation/Cell Membrane</span></th>
-              <th id="taxon_col_head" style={{"display": display.taxon}}>Taxon</th>
-              <th id="recommended_col_head" style={{"display": display.recommended}}>Recommended</th>
-            </tr>
-          </thead>
-          <tbody dangerouslySetInnerHTML={{__html: antibodies}}/>
-        </Table>
+        <DataTable columns={tableColumns()} data={hits} />
       </div>
     )
   }
