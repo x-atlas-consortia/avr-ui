@@ -52,6 +52,7 @@ Thumbs.db
 *.wmv
 
 server/*.egg-info
+server/node_modules
 
 instance/app.conf
 

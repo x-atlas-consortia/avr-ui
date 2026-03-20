@@ -125,7 +125,7 @@ class AntibodyHitsTable extends React.Component {
         col = {
           name: fieldNames[f] || titleCase(f?.replaceAll('_', ' ')),
           id: f,
-          selector: row => row._source[f],
+          selector: row => row._source[f] || '',
           omit: display[f] ? display[f] !== 'table-cell' : undefined,
           sortable: true,
           reorder: true,

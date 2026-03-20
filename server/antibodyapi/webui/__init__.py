@@ -92,7 +92,8 @@ def hubmap_search():
         "concentration_value", "dilution_factor", "conjugate", "cycle_number",
         "fluorescent_reporter", "manuscript_doi", "protocol_doi",
         "vendor_affiliation", "organ_uberon_id", "antigen_retrieval", "omap_id",
-        "created_by_user_email", "previous_version_id", "next_version_id"
+        "created_by_user_email", "previous_version_id", "next_version_id",
+        "senescence_specific", "cell_marker", "segmentation_cell_membrane", "taxon", "recommended"
     ]
     # Link the individual OMAP entries to the (P)URLs defined mapped in
     # https://github.com/hubmapconsortium/antibody-api/files/13229463/HRA7threleasetoUBKG-June2024PurlsOMAPs.xlsx
