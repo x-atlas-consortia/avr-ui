@@ -74,9 +74,6 @@ class SI(IntEnum):
 
 
 # THESE MUST MATCH THE ORDER IN THE ""SI"" CLASS!!!
-# TODO figure out:
-## a.senescence_specific, a.cell_marker, 
-## a.segmentation_cell_membrane, a.taxon, a.recommended
 QUERY = '''
 SELECT
     a.antibody_uuid,
