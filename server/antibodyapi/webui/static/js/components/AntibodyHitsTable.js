@@ -45,6 +45,18 @@ class AntibodyHitsTable extends React.Component {
         return a_hrefs('https://www.uniprot.org/uniprot/', '#section_general', hit._source.uniprot_accession_number)
       }
 
+      if (f === 'protocol_doi') {
+        return a_hrefs('https://doi.org/', '', hit._source.protocol_doi)
+      }
+
+      if (f === 'author_orcids') {
+        return a_hrefs('https://orcid.org/', '', hit._source.author_orcids);
+      }
+
+      if (f === 'hgnc_id') {
+        return a_hrefs('https://www.genenames.org/tools/search/#!/?query=', '', hit._source.hgnc_id);
+      }
+
       if (f === 'avr_pdf_filename') {
         if (hit._source.avr_pdf_filename === undefined) {
           return <></>
@@ -61,7 +73,7 @@ class AntibodyHitsTable extends React.Component {
       }
 
       if (f === 'manuscript_doi') {
-        if (hit._source.manuscript_doi != '') {
+        if (hit._source.manuscript_doi !== '') {
           return <a href={`https://doi.org/${hit._source.manuscript_doi}`} target="_blank">{hit._source.manuscript_doi}{linkOutIcon}</a>
         }
         return <></>
