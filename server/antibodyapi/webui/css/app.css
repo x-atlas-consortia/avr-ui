@@ -457,3 +457,7 @@ div.panel{
   /* border:1px solid #a3a3a3; */
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
 }
+
+.rdt_TableBody [role="row"]:nth-child(odd) {
+  background-color: #faf8f8;
+}
