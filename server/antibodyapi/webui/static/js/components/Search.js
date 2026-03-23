@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   SearchkitProvider, SearchBox, Hits, Layout, LayoutBody, SideBar,
   RefinementListFilter, ActionBar, LayoutResults, HitsStats, Panel,
   ActionBarRow, SelectedFilters, ResetFilters, NoHits, Pagination, InitialLoader, ExistsQuery, BoolMustNot
 } from "searchkit";
 import AntibodyHitsTable from './AntibodyHitsTable';
-import { AdditionalColumns } from './AdditionalColumns';
+import { TableConfiguration } from './TableConfiguration';
 import DownloadFile from './DownloadFile';
 import AppNavBar from './AppNavBar';
 import RefinementOption from './RefinementOption'
@@ -15,14 +15,7 @@ import CookieConsent from 'react-cookie-consent';
 import AppSearchkitManager from './AppSearchKitManager';
 
 
-const searchkit = new AppSearchkitManager("/");
-searchkit.addDefaultQuery(query => {
-  console.trace('query change', query)
-  return query.addQuery(
-    BoolMustNot([ExistsQuery("next_version_id")])
-  )
-}
-);
+
 
 class BannerMessage extends React.Component {
   render() {
@@ -57,6 +50,7 @@ function collapseAllFilters() {
 function Search(props) {
   const [modalShow, setModalShow] = useState(false)
   const [hitsPerPage, setHitsPerPage] = useState(20)
+  const [providerKey, setProviderKey] = useState(null)
 
   const options = { showEllipsis: true, showLastIcon: false, showNumbers: true }
   const [cookies] = useCookies([]);
@@ -69,12 +63,19 @@ function Search(props) {
   }
 
   useEffect(() => {
-    console.log(hitsPerPage)
+    setProviderKey(new Date().getTime())
+    
   }, [hitsPerPage])
 
+  const searchkit = useMemo(() => new AppSearchkitManager("/"), [hitsPerPage]);
+  searchkit.addDefaultQuery(query => {
+    return query.addQuery(
+      BoolMustNot([ExistsQuery("next_version_id")])
+    )
+  });
 
   return (
-    <SearchkitProvider searchkit={searchkit} key={new Date().toLocaleDateString()}>
+    <SearchkitProvider searchkit={searchkit} key={providerKey}>
       <>
         <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
         <Layout>
@@ -229,9 +230,9 @@ function Search(props) {
 
                   <div><Button className='mb-2' variant="primary" onClick={() => setModalShow(true)}>
                     <i className="bi bi-table"></i>&nbsp;
-                    Configure Columns
+                    Configure Table
                   </Button></div>
-                  <AdditionalColumns
+                  <TableConfiguration
                     setHitsPerPage={setHitsPerPage}
                     hitsPerPage={hitsPerPage}
                     show={modalShow}

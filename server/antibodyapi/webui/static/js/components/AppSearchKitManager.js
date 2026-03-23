@@ -10,10 +10,14 @@ class AppSearchkitManager extends SearchkitManager {
     const query = super.buildQuery()
     try {
       const must = query?.query?.query?.bool?.must
-      if (Array.isArray(must) && must.length > 1) {
-        const k = must[1]?.simple_query_string?.query
-        if (k) {
-           query.query.query.bool.must[1].simple_query_string.query = k + '*'
+      if (Array.isArray(must)) {
+        for (let i = 0; i < must.length; i++) {
+          if (must[i].simple_query_string) {
+            const k = must[i]?.simple_query_string?.query
+            if (k) {
+              query.query.query.bool.must[i].simple_query_string.query = k + '*'
+            }
+          }
         }
       }
     } catch (e) {

@@ -22,9 +22,9 @@ class AntibodyHitsTable extends React.Component {
 
     function a_href_omap_id(omap_id) {
       if (omap_id in omap_id_linkage) {
-        return <div class="text-truncate"><a href={omap_id_linkage[omap_id]} target="_blank">{omap_id} {linkOutIcon}</a></div>
+        return <div className="text-truncate"><a href={omap_id_linkage[omap_id]} target="_blank">{omap_id} {linkOutIcon}</a></div>
       } else {
-        return <div class="text-truncate">{omap_id}</div>;
+        return <div className="text-truncate">{omap_id}</div>;
       }
     }
 
@@ -61,7 +61,7 @@ class AntibodyHitsTable extends React.Component {
         if (hit._source.avr_pdf_filename === undefined) {
           return <></>
         }
-        return <div class="text-truncate"><a title={hit._source.avr_pdf_filename} href={`${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}`} target="_blank">{hit._source.avr_pdf_filename} {linkOutIcon}</a></div>
+        return <div className="text-truncate"><a title={hit._source.avr_pdf_filename} href={`${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}`} target="_blank">{hit._source.avr_pdf_filename} {linkOutIcon}</a></div>
       }
 
       if (f === 'omap_id') {
