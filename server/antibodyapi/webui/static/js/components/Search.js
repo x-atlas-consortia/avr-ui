@@ -14,7 +14,7 @@ import { useCookies } from 'react-cookie';
 import CookieConsent from 'react-cookie-consent';
 import AppSearchkitManager from './AppSearchKitManager';
 import AppHitsStats from './AppHitsStats';
-
+import AppNoHits from './AppNoHits';
 
 
 
@@ -245,11 +245,11 @@ function Search(props) {
                   hitsPerPage={hitsPerPage}
                   mod="sk-hits-list"
                 />
-                <InitialLoader />
-                <NoHits />
-
+                {/* <InitialLoader /> */}
+                <AppNoHits hitsPerPage={hitsPerPage} paginationOptions={options} />
                 <Pagination options={options} />
                 <DownloadFile />
+                
 
               </LayoutResults>
             </div>

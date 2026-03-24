@@ -467,3 +467,8 @@ div.panel{
   grid-template-columns: 1fr 1fr; 
   gap: 20px;
 }
+
+.sk-search-box__loader.is-hidden {
+  display: block !important;
+  opacity: 0;
+}

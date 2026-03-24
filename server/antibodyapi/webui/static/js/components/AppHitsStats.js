@@ -6,6 +6,9 @@ import {
 
 class AppHitsStats extends HitsStats {
   renderText() {
+    if (this.getHitsCount() <= 0 || !this.getHits()?.length) {
+      return (<></>)
+    }
     const params = new URLSearchParams(window.location.search);
     let pageNumber = params.get('p') ? Number(params.get('p')) : 1;
     if (typeof pageNumber !== 'number') {
