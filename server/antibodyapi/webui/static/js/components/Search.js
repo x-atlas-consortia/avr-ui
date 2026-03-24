@@ -13,6 +13,7 @@ import Button from 'react-bootstrap/Button';
 import { useCookies } from 'react-cookie';
 import CookieConsent from 'react-cookie-consent';
 import AppSearchkitManager from './AppSearchKitManager';
+import AppHitsStats from './AppHitsStats';
 
 
 
@@ -221,7 +222,7 @@ function Search(props) {
                 <div className='sk-searchActions'>
                   <ActionBar>
                     <ActionBarRow>
-                      <HitsStats />
+                      <AppHitsStats hitsPerPage={hitsPerPage} pageNumber={1} />
                     </ActionBarRow>
                     <ActionBarRow>
                       <SelectedFilters />

@@ -111,7 +111,7 @@ function TableConfiguration(props) {
       <Modal.Body>
         <div>
           <Row>
-            <Col>
+            <Col sm={7}>
               <InputGroup>
               <InputGroup.Text>Columns</InputGroup.Text>
                 <Button onClick={setAll} variant="outline-primary">Select all</Button>
@@ -120,7 +120,7 @@ function TableConfiguration(props) {
             </Col>
 
 
-            <Col>
+            <Col sm={5}>
               <InputGroup className="mb-3">
                 <InputGroup.Text>Results per page</InputGroup.Text>
                 <Form.Control type='number' min={1} value={hitsPerPage} onChange={(e) => setHitsPerPage(Number(e.currentTarget.value))} aria-label="Amount of rows per page" onKeyDown={handleKeyDown} />
