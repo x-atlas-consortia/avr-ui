@@ -4,9 +4,13 @@ import Alert from "react-bootstrap/Alert"
 import Spinner from "react-bootstrap/Spinner"
 
 class AppNoHits extends NoHits {
-  pageNumber() {
+  getPageParam() {
     const params = new URLSearchParams(window.location.search);
-    let pageNumber = params.get('p') ? Number(params.get('p')) : 1;
+    return params.get('p')
+  }
+  pageNumber() {
+    const pageParam = this.getPageParam()
+    let pageNumber = pageParam ? Number(pageParam) : 1;
     if (typeof pageNumber !== 'number') {
       pageNumber = 1
     }
@@ -14,7 +18,7 @@ class AppNoHits extends NoHits {
   }
   isOutOfBounds() {
     const from = ((this.pageNumber() - 1) * this.props.hitsPerPage) + 1
-    return from > this.getHitsCount()
+    return this.getPageParam() && from > this.getHitsCount()
   }
   render() {
 
