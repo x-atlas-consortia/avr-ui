@@ -219,14 +219,6 @@ body{
 }
 }
 
-.banner {
-  margin: 75px 15px -65px;
-  padding: 10px;
-  border: 1px solid rgb(255, 230, 156);
-  background-color: rgb(255, 243, 205);
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
-}
-
 .sk-top-bar__content{
   display:inline-block;
   max-width: 1280px;

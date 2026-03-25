@@ -130,7 +130,9 @@ def hubmap_search():
         "OMAP-30": "https://purl.humanatlas.io/omap/30-salivary-gland-codex"
     }
 
+    banner_message_alert_style: str = ''
     try:
+        banner_message_alert_style: str = current_app.config['BANNER_MESSAGE_ALERT_STYLE']
         banner_message: str = current_app.config['BANNER_MESSAGE']
         try:
             html5lib.parseFragment(banner_message)
@@ -146,7 +148,8 @@ def hubmap_search():
         display=display,
         csv_column_order=csv_column_order,
         omap_id_linkage=omap_id_linkage,
-        banner_message=banner_message
+        banner_message=banner_message,
+        banner_message_alert_style=banner_message_alert_style
     )
 
 @webui_blueprint.route('/static/atlas-logo.png')

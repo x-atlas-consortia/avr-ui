@@ -15,21 +15,24 @@ import CookieConsent from 'react-cookie-consent';
 import AppSearchkitManager from './AppSearchKitManager';
 import AppHitsStats from './AppHitsStats';
 import AppNoHits from './AppNoHits';
-
+import Alert from 'react-bootstrap/Alert';
 
 
 class BannerMessage extends React.Component {
   render() {
     if (!banner_message) {
       return (
-        <div></div>
+        <></>
       );
     }
 
     return (
-      <div className="banner">
+      <div className='sk-layout__body'>
+        <Alert variant={banner_message_alert_style || 'info'}>
         <div dangerouslySetInnerHTML={{ __html: banner_message }} />
+      </Alert>
       </div>
+      
     );
   }
 }
@@ -82,8 +85,8 @@ function Search(props) {
         <Layout>
           <AppNavBar />
 
-          <BannerMessage />
-          <LayoutBody>
+          {banner_message && <BannerMessage />}
+          <LayoutBody className={banner_message ? 'mt-2' : ''}>
 
             <h1>HuBMAP/SenNet Antibody Validation Report Search</h1>
             <SearchBox

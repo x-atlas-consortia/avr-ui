@@ -15,7 +15,8 @@ class AppHitsStats extends HitsStats {
       pageNumber = 1
     }
     const from = ((pageNumber - 1) * this.props.hitsPerPage) + 1
-    return (<div className={`${this.bemBlocks.container("info")}`}>Showing <strong>{from}</strong> to <strong>{pageNumber * this.props.hitsPerPage}</strong> results out of <strong>{this.getHitsCount()}</strong> after {this.searchkit.getTime()}ms.</div>)
+    const to = Math.min(pageNumber * this.props.hitsPerPage, this.getHitsCount())
+    return (<div className={`${this.bemBlocks.container("info")}`}>Showing <strong>{from}</strong> to <strong>{to}</strong> results out of <strong>{this.getHitsCount()}</strong> after {this.searchkit.getTime()}ms.</div>)
   }
 
   render() {
