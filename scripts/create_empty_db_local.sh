@@ -16,7 +16,12 @@ if [[ `which psql > /dev/null 2>&1 ; echo $?` -ne 0 ]] ; then
 fi
 
 export PGPASSWORD=$DATABASE_PASSWORD
-psql -h $DATABASE_HOST -U $DATABASE_USER -d $DATABASE_NAME -f development/evolutions/modify_1.sql
+if [ "$1" == "mod" ]; then
+  psql -h $DATABASE_HOST -U $DATABASE_USER -d $DATABASE_NAME -f development/evolutions/modify_$2.sql
+else
+  psql -h $DATABASE_HOST -U $DATABASE_USER -d $DATABASE_NAME -c "DROP TABLE IF EXISTS antibodies, vendors"
+  psql -h $DATABASE_HOST -U $DATABASE_USER -d $DATABASE_NAME -f development/postgresql_init_scripts/create_tables.sql
+fi
 
 # Rebuild the index
 scripts/rebuild_elasticsearch_index.sh $ANTIBODY_URL

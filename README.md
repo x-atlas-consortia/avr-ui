@@ -64,6 +64,14 @@ You may need to rebuild an empty database if the schema has change or if no sche
 $ ./scripts/create_empty_db_local.sh
 ```
 
+Can also pass an evolution to an already existing schema passing the `mod` and `$x` arguments. `$x` resolves to part of the file name at path `development/evolutions/modify_$x.sql`.
+```bash
+$ ./scripts/create_empty_db_local.sh mod $x
+```
+```bash
+$ ./scripts/create_empty_db_local.sh mod 1 # resolves to modify_1.sql
+```
+
 You will need to manually create the tables on the PostgreSQL database that is running in the container.
 The user, password, and database definitions are found in `server/antibodyapi/default_config.py`,
 and for deployment should be overwritten in `instance/app.conf` (which is not kept in the repo).
