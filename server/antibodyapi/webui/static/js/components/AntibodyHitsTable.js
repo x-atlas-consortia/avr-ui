@@ -190,7 +190,7 @@ class AntibodyHitsTable extends React.Component {
 
     return (
       <div className='sk-table__wrap'>
-        <DataTable columns={tableColumns()} data={hits} />
+        <DataTable columns={tableColumns()} data={hits} keyField={'_id'} />
       </div>
     )
   }
