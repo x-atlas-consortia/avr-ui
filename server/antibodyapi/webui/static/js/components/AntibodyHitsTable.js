@@ -97,8 +97,15 @@ class AntibodyHitsTable extends React.Component {
       }
 
       if (f === 'cell_marker') {
-        if (hit._source.cell_marker !== undefined) {
-          return <a target="_blank" href={`http://purl.obolibrary.org/obo/${hit._source.cell_marker.replace(':', '_')}`}>{hit._source.cell_marker} {linkOutIcon}</a>
+        if (hit._source.cell_marker !== undefined && hit._source.cell_marker.length) {
+          return (
+            <a
+              target="_blank"
+              href={`http://purl.obolibrary.org/obo/${hit._source.cell_marker.replace(":", "_")}`}
+            >
+              {hit._source.cell_marker} {linkOutIcon}
+            </a>
+          );
         }
         return <></>
       }

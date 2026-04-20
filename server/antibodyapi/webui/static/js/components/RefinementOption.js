@@ -21,6 +21,10 @@ const RefinementOption = (props) => {
     fetchData()
   }, [])
 
+  if (!props.label) {
+    return <></>
+  }
+
   return (
     <div
       role="checkbox"
