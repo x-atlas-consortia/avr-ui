@@ -8,14 +8,17 @@ class AntibodyHitsTable extends React.Component {
     const linkOutIcon = <i className="bi bi-box-arrow-up-right"></i>
 
     function a_hrefs(url_prefix, url_suffix, data_s) {
-      let cs = '';
+      let cs = [];
       const data_l = data_s.split(',');
       for (let i = 0; i < data_l.length; i++ ) {
         let data = data_l[i].trim();
-        if (i > 0) {
-          cs += ', ';
-        }
-        cs += `<div class="text-truncate"><a href="${url_prefix}${data}${url_suffix}" target="_blank">${data} <i class="bi bi-box-arrow-up-right"></i></a></div>`;
+        cs.push(
+          <div title={data} key={i} className="text-truncate">
+            <a href={`${url_prefix}${data}${url_suffix}`} target="_blank">
+              {data} {linkOutIcon}
+            </a>
+          </div>
+        );
       }
       return cs;
     }
@@ -61,7 +64,17 @@ class AntibodyHitsTable extends React.Component {
         if (hit._source.avr_pdf_filename === undefined) {
           return <></>
         }
-        return <div className="text-truncate"><a title={hit._source.avr_pdf_filename} href={`${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}`} target="_blank">{hit._source.avr_pdf_filename} {linkOutIcon}</a></div>
+        return (
+          <div className="text-truncate">
+            <a
+              title={hit._source.avr_pdf_filename}
+              href={`${assets_url}/${hit._source.avr_pdf_uuid}/${hit._source.avr_pdf_filename}`}
+              target="_blank"
+            >
+              {hit._source.avr_pdf_filename} {linkOutIcon}
+            </a>
+          </div>
+        );
       }
 
       if (f === 'omap_id') {
@@ -74,7 +87,16 @@ class AntibodyHitsTable extends React.Component {
 
       if (f === 'manuscript_doi') {
         if (hit._source.manuscript_doi !== '') {
-          return <a href={`https://doi.org/${hit._source.manuscript_doi}`} target="_blank">{hit._source.manuscript_doi}{linkOutIcon}</a>
+          return (
+            <a
+              title={hit._source.manuscript_doi}
+              href={`https://doi.org/${hit._source.manuscript_doi}`}
+              target="_blank"
+            >
+              {hit._source.manuscript_doi}
+              {linkOutIcon}
+            </a>
+          );
         }
         return <></>
       }
@@ -85,7 +107,15 @@ class AntibodyHitsTable extends React.Component {
       }
 
       if (f === 'created_by_user_email') {
-        return <a href={`mailto:${hit._source.created_by_user_email}`} target="_blank">{hit._source.created_by_user_email} {linkOutIcon}</a>
+        return (
+          <a
+            href={`mailto:${hit._source.created_by_user_email}`}
+            target="_blank"
+            title={hit._source.created_by_user_email}
+          >
+            {hit._source.created_by_user_email} {linkOutIcon}
+          </a>
+        );
       }
 
       if (f === 'previous_version_id') {
@@ -148,13 +178,9 @@ class AntibodyHitsTable extends React.Component {
           omit: display[f] ? display[f] !== 'table-cell' : undefined,
           sortable: true,
           reorder: true,
+          width: '200px',
           format: (hit) => {
             return <>{fieldFormat(hit, f)}</>
-          }
-        }
-        if (['target_symbol', 'uniprot_accession_number', 'author_orcids', 'hgnc_id', 'protocol_doi'].indexOf(f) !== -1) {
-          col.format = (hit) => {
-            return <span dangerouslySetInnerHTML={{__html: fieldFormat(hit, f)}} ></span>
           }
         }
         columns.push(col)
