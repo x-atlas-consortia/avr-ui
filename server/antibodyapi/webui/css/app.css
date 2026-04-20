@@ -454,6 +454,11 @@ div.panel{
   background-color: #faf8f8;
 }
 
+.rdt_TableCell {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr; 
