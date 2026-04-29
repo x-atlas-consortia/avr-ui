@@ -15,7 +15,7 @@ import CookieConsent from 'react-cookie-consent';
 import AppSearchkitManager from './AppSearchKitManager';
 import AppHitsStats from './AppHitsStats';
 import AppNoHits from './AppNoHits';
-import Alert from 'react-bootstrap/Alert';
+import {Alert, Container, Col, Row, Stack, Badge} from 'react-bootstrap';
 
 
 class BannerMessage extends React.Component {
@@ -89,7 +89,28 @@ function Search(props) {
 
           {banner_message && <BannerMessage />}
           <LayoutBody className={banner_message ? "mt-2" : ""}>
-            <h1>HuBMAP/SenNet Antibody Validation Report Search</h1>
+            <Container fluid className='mt-2'>
+              <Row>
+                <Col lg={8}>
+                  <h1>Antibody Validation Report Search</h1>
+                </Col>
+                <Col lg={4} className="d-flex justify-content-end">
+                  <Stack direction="horizontal" gap={2}>
+                    {[
+                      "HuBMAP",
+                      "NIH IRP",
+                      "LungMAP",
+                      "Miltenyi Biotec",
+                      "SenNet",
+                    ].map((n) => (
+                      <Badge bg="secondary" key={n}>
+                        {n}
+                      </Badge>
+                    ))}
+                  </Stack>
+                </Col>
+              </Row>
+            </Container>
             <SearchBox
               autofocus={true}
               queryOptions={{ analyzer: "standard" }}
