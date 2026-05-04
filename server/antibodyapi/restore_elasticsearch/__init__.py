@@ -9,7 +9,7 @@ import logging
 import concurrent.futures
 import threading
 
-from antibodyapi.utils.decorators import require_data_admin, require_avr_group
+from antibodyapi.utils.decorators import require_data_admin
 
 restore_elasticsearch_blueprint = Blueprint('restore_elasticsearch', __name__)
 logger = logging.getLogger(__name__)
