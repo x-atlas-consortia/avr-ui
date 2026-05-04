@@ -6,10 +6,13 @@ from antibodyapi.utils.elasticsearch import index_antibody
 import elasticsearch
 import requests
 
+from antibodyapi.utils.decorators import require_data_admin
+
 restore_elasticsearch_blueprint = Blueprint('restore_elasticsearch', __name__)
 
 
 @restore_elasticsearch_blueprint.route('/restore_elasticsearch', methods=['PUT'])
+@require_data_admin()
 def restore_elasticsearch():
     """
     This endpoint will restore the ElasticSearch index from the data that has been stored
