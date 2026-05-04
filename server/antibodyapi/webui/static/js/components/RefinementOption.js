@@ -7,18 +7,22 @@ import React, {useRef, useEffect} from 'react';
 const RefinementOption = (props) => {
   const labelRef = useRef(null)
 
-  const fetchData = async () => {
-    const res = await fetch(`https://ontology.api.hubmapconsortium.org/celltypes/${props.label.replace('CL:', '')}`)
+  const fetchCellTypeData = async () => {
+    const res = await fetch(
+      `https://ontology.api.hubmapconsortium.org/celltypes/${props.label.replace("CL:", "")}`,
+    );
     if (res.ok) {
-      const result = await res.json()
+      const result = await res.json();
       if (Array.isArray(result) && result.length) {
-        labelRef.current.setAttribute('title', result[0].cell_type.name)
+        labelRef.current.setAttribute("title", result[0].cell_type.name);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    fetchData()
+    if (props.label.includes('CL:')) {
+      fetchCellTypeData()
+    }
   }, [])
 
   if (!props.label) {

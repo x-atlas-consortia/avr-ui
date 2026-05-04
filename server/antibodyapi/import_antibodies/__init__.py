@@ -9,6 +9,7 @@ from flask import (
 import psycopg2
 from psycopg2._psycopg import connection
 from psycopg2.errors import UniqueViolation #pylint: disable=no-name-in-module
+from antibodyapi.utils.decorators import require_avr_group
 from werkzeug.utils import secure_filename
 from antibodyapi.utils import (
     allowed_file, find_or_create_vendor, get_cursor,
@@ -35,6 +36,7 @@ def only_printable_and_strip(s: str) -> str:
 
 
 @import_antibodies_blueprint.route('/antibodies/import', methods=['POST'])
+@require_avr_group()
 def import_antibodies(): # pylint: disable=too-many-branches
     """
     Currently this is called from 'server/antibodyapi/webui/templates/upload.html' through the
