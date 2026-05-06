@@ -89,25 +89,37 @@ function Search(props) {
 
           {banner_message && <BannerMessage />}
           <LayoutBody className={banner_message ? "mt-2" : ""}>
-            <Container fluid className='mt-2'>
+            <Container fluid className="mt-2">
               <Row>
                 <Col lg={8}>
                   <h1>Antibody Validation Report Search</h1>
                 </Col>
-                <Col lg={4} className="d-flex justify-content-end">
-                  <Stack direction="horizontal" gap={2}>
-                    {[
-                      "HuBMAP",
-                      "NIH IRP",
-                      "LungMAP",
-                      "Miltenyi Biotec",
-                      "SenNet",
-                    ].map((n) => (
-                      <Badge bg="secondary" key={n}>
-                        {n}
-                      </Badge>
-                    ))}
-                  </Stack>
+                <Col lg={4}>
+                  <Row>
+                    <Col lg={8} className="d-flex justify-content-lg-end mt-3 mt-sm-0">
+                      <strong>Contributing Groups: </strong>
+                    </Col>
+                    <Col lg={4}>
+                      <div>
+                        {[
+                          "HuBMAP",
+                          "NIH IRP",
+                          "LungMAP",
+                          "Miltenyi Biotec",
+                          "SenNet",
+                        ].map((n) => (
+                          <small
+                            title={n}
+                            arial-label={`Contributing Group ${n}`}
+                            className="display-block"
+                            key={n}
+                          >
+                            {n}
+                          </small>
+                        ))}
+                      </div>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Container>
