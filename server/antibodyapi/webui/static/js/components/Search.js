@@ -15,7 +15,7 @@ import CookieConsent from 'react-cookie-consent';
 import AppSearchkitManager from './AppSearchKitManager';
 import AppHitsStats from './AppHitsStats';
 import AppNoHits from './AppNoHits';
-import Alert from 'react-bootstrap/Alert';
+import {Alert, Container, Col, Row, Stack, Badge} from 'react-bootstrap';
 
 
 class BannerMessage extends React.Component {
@@ -81,32 +81,96 @@ function Search(props) {
   return (
     <SearchkitProvider searchkit={searchkit} key={providerKey}>
       <>
-        <CookieConsent>This website uses cookies to enhance the user experience.</CookieConsent>
+        <CookieConsent>
+          This website uses cookies to enhance the user experience.
+        </CookieConsent>
         <Layout>
           <AppNavBar />
 
           {banner_message && <BannerMessage />}
-          <LayoutBody className={banner_message ? 'mt-2' : ''}>
-
-            <h1>HuBMAP/SenNet Antibody Validation Report Search</h1>
+          <LayoutBody className={banner_message ? "mt-2" : ""}>
+            <Container fluid className="mt-2">
+              <Row>
+                <Col lg={8}>
+                  <h1>Antibody Validation Report Search</h1>
+                </Col>
+                <Col lg={4}>
+                  <Row>
+                    <Col lg={8} className="d-flex justify-content-lg-end mt-3 mt-sm-0">
+                      <strong>Contributing Groups: </strong>
+                    </Col>
+                    <Col lg={4}>
+                      <div>
+                        {[
+                          "HuBMAP",
+                          "NIH IRP",
+                          "LungMAP",
+                          "Miltenyi Biotec",
+                          "SenNet",
+                        ].map((n) => (
+                          <small
+                            title={n}
+                            arial-label={`Contributing Group ${n}`}
+                            className="display-block"
+                            key={n}
+                          >
+                            {n}
+                          </small>
+                        ))}
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Container>
             <SearchBox
               autofocus={true}
               queryOptions={{ analyzer: "standard" }}
               searchOnChange={false}
               queryFields={[
-                "antibody_uuid", "antibody_hubmap_id", "protocol_doi", "manuscript_doi", "uniprot_accession_number",
-                "target_symbol", "target_aliases", "rrid", "host",
-                "clonality.keyword", "clone_id", "vendor", "catalog_number", "lot_number",
-                "recombinant", "organ", "organ_uberon_id", "omap_id", "antigen_retrieval", "hgnc_id", "isotype",
-                "concentration_value", "dilution_factor", "conjugate", "method", "tissue_preservation", "cycle_number",
-                "fluorescent_reporter", "author_orcids", "vendor_affiliation", "created_by_user_displayname",
-                "created_by_user_email", "avr_pdf_filename", "previous_version_id", "next_version_id"
+                "antibody_uuid",
+                "antibody_hubmap_id",
+                "protocol_doi",
+                "manuscript_doi",
+                "uniprot_accession_number",
+                "target_symbol",
+                "target_aliases",
+                "rrid",
+                "host",
+                "clonality.keyword",
+                "clone_id",
+                "vendor",
+                "catalog_number",
+                "lot_number",
+                "recombinant",
+                "organ",
+                "organ_uberon_id",
+                "omap_id",
+                "antigen_retrieval",
+                "hgnc_id",
+                "isotype",
+                "concentration_value",
+                "dilution_factor",
+                "conjugate",
+                "method",
+                "tissue_preservation",
+                "cycle_number",
+                "fluorescent_reporter",
+                "author_orcids",
+                "vendor_affiliation",
+                "created_by_user_displayname",
+                "created_by_user_email",
+                "avr_pdf_filename",
+                "previous_version_id",
+                "next_version_id",
               ]}
             />
-            <div className='searchView'>
+            <div className="searchView">
               <SideBar>
                 <h3>Filters</h3>
-                <a className='collapseButton' onClick={collapseAllFilters}>Collapse all</a>
+                <a className="collapseButton" onClick={collapseAllFilters}>
+                  Collapse all
+                </a>
                 <ResetFilters />
                 <RefinementListFilter
                   id="clonality"
@@ -114,8 +178,12 @@ function Search(props) {
                   field="clonality.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="conjugate"
@@ -123,8 +191,12 @@ function Search(props) {
                   field="conjugate.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="host"
@@ -132,8 +204,12 @@ function Search(props) {
                   field="host.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="method"
@@ -141,8 +217,12 @@ function Search(props) {
                   field="method.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="organ"
@@ -150,8 +230,12 @@ function Search(props) {
                   field="organ.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="cell_marker"
@@ -159,9 +243,12 @@ function Search(props) {
                   field="cell_marker.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
+                  size={10}
+                  limit={10}
                   itemComponent={RefinementOption}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="taxon"
@@ -169,8 +256,12 @@ function Search(props) {
                   field="taxon.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="recombinant"
@@ -178,8 +269,12 @@ function Search(props) {
                   field="recombinant.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="target_symbol"
@@ -187,8 +282,12 @@ function Search(props) {
                   field="target_symbol.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="tissue_preservation"
@@ -196,8 +295,12 @@ function Search(props) {
                   field="tissue_preservation.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="recommended"
@@ -205,8 +308,12 @@ function Search(props) {
                   field="recommended.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
                 <RefinementListFilter
                   id="vendor_name"
@@ -214,15 +321,17 @@ function Search(props) {
                   field="vendor_name.keyword"
                   operator="OR"
                   searchable={true}
-                  size={10} limit={10}
-                  containerComponent={<Panel collapsable={true} defaultCollapsed={true} />}
+                  size={10}
+                  limit={10}
+                  itemComponent={RefinementOption}
+                  containerComponent={
+                    <Panel collapsable={true} defaultCollapsed={true} />
+                  }
                 />
-
               </SideBar>
 
               <LayoutResults>
-
-                <div className='sk-searchActions'>
+                <div className="sk-searchActions">
                   <ActionBar>
                     <ActionBarRow>
                       <AppHitsStats hitsPerPage={hitsPerPage} pageNumber={1} />
@@ -232,10 +341,15 @@ function Search(props) {
                     </ActionBarRow>
                   </ActionBar>
 
-                  <div><Button className='mb-2' variant="primary" onClick={() => setModalShow(true)}>
-                    <i className="bi bi-table"></i>&nbsp;
-                    Configure Table
-                  </Button></div>
+                  <div>
+                    <Button
+                      className="mb-2"
+                      variant="primary"
+                      onClick={() => setModalShow(true)}
+                    >
+                      <i className="bi bi-table"></i>&nbsp; Configure Table
+                    </Button>
+                  </div>
                   <TableConfiguration
                     setHitsPerPage={setHitsPerPage}
                     hitsPerPage={hitsPerPage}
@@ -249,18 +363,19 @@ function Search(props) {
                   mod="sk-hits-list"
                 />
                 {/* <InitialLoader /> */}
-                <AppNoHits hitsPerPage={hitsPerPage} paginationOptions={options} />
+                <AppNoHits
+                  hitsPerPage={hitsPerPage}
+                  paginationOptions={options}
+                />
                 <Pagination options={options} />
                 <DownloadFile />
-                
-
               </LayoutResults>
             </div>
           </LayoutBody>
         </Layout>
       </>
     </SearchkitProvider>
-  )
+  );
 };
 
 export default Search;

@@ -5,11 +5,13 @@ from antibodyapi.utils import (
     get_hubmap_uuid, insert_query, json_error
 )
 from antibodyapi.utils.elasticsearch import index_antibody
+from antibodyapi.utils.decorators import require_avr_group
 
 save_antibody_blueprint = Blueprint('save_antibody', __name__)
 
 
 @save_antibody_blueprint.route('/antibodies', methods=['POST'])
+@require_avr_group()
 def save_antibody():
     # avr_pdf_uuid, and avr_pdf_filename are not required but are only present when a pdf is also uploaded.
     required_properties = (
