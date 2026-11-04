@@ -1,8 +1,10 @@
-FROM python:3.12.2-alpine3.19
+FROM python:3.12.16-alpine3.24
 
 RUN apk add --no-cache --update build-base gcc libc-dev libffi-dev linux-headers pcre-dev postgresql-dev postgresql-libs su-exec curl
 
-RUN apk add --update nodejs yarn py3-pypdf2
+RUN apk add --no-cache --repository=http://alpinelinux.org --update nodejs
+
+RUN apk add --update yarn py3-pypdf2
 
 ENV VIRTUAL_ENV=/app
 RUN python3 -m venv $VIRTUAL_ENV
